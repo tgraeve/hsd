@@ -13,15 +13,6 @@ api = tweepy.API(auth, wait_on_rate_limit=True)
 
 query = "schwuchtel"
 
-# places = api.geo_search(query="Deutschland", granularity = "country")
-# place_id = places[0].id
-
-# print places[0].id
-
-# tweets = api.search(q="place:%s" % place_id + "#krimigranten")
-# for tweet in tweets:
-#     print tweet.text + " \n\n " +  tweet.place.name if tweet.place else "Undefined place"
-
 count = 1
 
 for tweet in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454km").items():
@@ -30,7 +21,3 @@ for tweet in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454
 		f.write(json.dumps(tweet._json))
 		f.write("\n")
 	count +=1
-
-# public_tweets = api.home_timeline()
-# for tweet in public_tweets:
-#     print tweet.text
