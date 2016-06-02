@@ -1,4 +1,5 @@
 import tweepy
+from tweepy.parsers import JSONParser
 import json
 
 consumer_key = "2OM8NeaYfQRcXng9tPgFKft3t"
@@ -9,15 +10,19 @@ access_secret = "q0sAC1WtPhHt21ChPtUSrkWQqRXo4WHcmkgMtUSKBdiQU"
 auth = tweepy.AppAuthHandler(consumer_key,consumer_secret)
 # auth.set_access_token(access_token,access_secret)
 
-api = tweepy.API(auth, wait_on_rate_limit=True)
+api = tweepy.API(auth, parser=JSONParser(), wait_on_rate_limit=True)
 
 query = "schwuchtel"
 
 count = 1
 
-for tweet in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454km").items():
-	print ("Nummer: %5d, Inhalt: %150s" % (count,tweet.text))
-	with open('homophobie.json','a') as f:
-		f.write(json.dumps(tweet._json))
-		f.write("\n")
-	count +=1
+results = api.search(q=query,geocode="51.1656910,10.4515260,454km")
+json = json.dumps(results)
+print json
+
+# for tweet in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454km", count=1).items():
+# 	print ("Nummer: %5d, Inhalt: %150s" % (count,tweet.text))
+# 	with open('homophobie.json','a') as f:
+# 		f.write(json.dumps(tweet._json))
+# 		f.write("\n")
+# 	count +=1
