@@ -16,9 +16,9 @@ query = "schwuchtel"
 
 count = 1
 
-results = api.search(q=query,geocode="51.1656910,10.4515260,454km")
-json = json.dumps(results)
-print json
+for status in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454km", count=1).items():
+	print json.dumps(status)
+
 
 # for tweet in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454km", count=1).items():
 # 	print ("Nummer: %5d, Inhalt: %150s" % (count,tweet.text))
