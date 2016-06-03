@@ -15,9 +15,12 @@ query = "schwuchtel"
 
 count = 1
 
-for tweet in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454km").items():
-	print ("Nummer: %5d, Inhalt: %150s" % (count,tweet.text))
-	with open('homophobie.json','a') as f:
-		f.write(json.dumps(tweet._json))
-		f.write("\n")
+search_results = []
+
+for status in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454km").items():
+	search_results.append(status._json)
+	print ("Nummer: %5d, Inhalt: %150s" % (count,status.text))
 	count +=1
+
+with open('data/homophobie.json','a') as f:
+	json.dump(search_results, f)
