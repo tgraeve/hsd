@@ -38,7 +38,7 @@ Der Nutzer kann hierbei die Darstellung wie folgt manipulieren:
 
 Abbildung 1 zeigt den groben Aufbau, welchen wir uns für die Website vorstellen. Das Design kann und wird im Laufe des Projekts wahrscheinlich abweichen. Auch halten wir uns die Option offen, die Checkboxen durch Dropdown-Menüs zu ersetzen, falls die Darstellung durch die Menge der Auswahlmöglichkeiten zu unübersichtlich wird.
 
-![alt text](/media/concept/icon48.png "Abbildung 1")
+![Mockup](/media/concept/mockup1.png "Abbildung 1")
 
 
 Zur technischen Realisierung der Präsentation nutzen wir die JavaScript-Bibliothek [OpenLayers](openlayers.org). Hierbei handelt es sich um eine JavaScript-API, die es ermöglicht, dynamische Karten auf Webseiten darzustellen.
