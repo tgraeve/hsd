@@ -5,6 +5,8 @@ Es beschränkt sich geografisch auf Deutschland und sprachlich auf die deutsche 
 
 ## Konzept
 
+![Pipeline](/media/concept/pipeline_konzept.png "Pipeline Konzept")
+
 1. Datenquelle
 2. Datensammlung und -verarbeitung
 3. Präsentation
@@ -20,11 +22,13 @@ Als Datenquelle dient uns Twitter. Anfängliche Überlegungen zu Facebook, Youtu
 
 Twitter lässt durch seine [Search API](https://dev.twitter.com/rest/public/search) einen beschränkten Zugriff auf seine Daten zu.
 
-Für den Zugriff und die Koordination der Abfragen greifen wir auf [Tweepy](tweepy.org) zurück.
+Für den Zugriff und die Koordination der Abfragen greifen wir auf [Tweepy](http://tweepy.org) zurück.
 
-Aktuell sammeln wir Tweets nach bestimmten Hashtags und speichern diese in JSON-Form zwischen. Die Hashtags sind Themen wie Homophobie zugeordnet und wurden anfangs händisch und intuitiv ausgewählt um dann nach und nach erweitert zu werden.
+Aktuell sammeln wir Tweets nach bestimmten Hashtags und speichern diese in JSON-Form zwischen. Die Hashtags sind Themen wie z.B. Homophobie zugeordnet und wurden anfangs händisch und intuitiv ausgewählt um dann nach und nach erweitert zu werden. Die Suchanfrage umschließt nur Tweets, welche Geodaten enthalten und welche zudem in Deutschland liegen müssen.
 
 Wir erhoffen uns im Laufe des Projekts aus den gesammelten Daten weitere Erkenntnisse, die eine erweiterte Analyse von Tweets ermöglichen um die anfängliche Suche nach statischen Hashtags weiterentwickeln zu können.
+
+Geplant ist, die so entstehende Menge an Tweets für unsere Zwecke vorerst händisch als Hatespeech zu klassifizieren, um eine Repräsentation auf Kartenebene zu ermöglichen.
 
 
 ### Präsentation
@@ -41,9 +45,9 @@ Abbildung 1 zeigt den groben Aufbau, welchen wir uns für die Website vorstellen
 ![Mockup](/media/concept/mockup1.png "Abbildung 1")
 
 
-Zur technischen Realisierung der Präsentation nutzen wir die JavaScript-Bibliothek [OpenLayers](openlayers.org). Hierbei handelt es sich um eine JavaScript-API, die es ermöglicht, dynamische Karten auf Webseiten darzustellen.
+Zur technischen Realisierung der Präsentation nutzen wir die JavaScript-Bibliothek [OpenLayers](http://openlayers.org). Hierbei handelt es sich um eine JavaScript-API, die es ermöglicht, dynamische Karten auf Webseiten darzustellen.
 
-In letzter Instanz mussten wir uns zunächst zwischen der [Google Maps API](developers.google.com/maps/) und OpenLayers entscheiden, welche in ihrer Funktionalität sehr ähnlich sind.
+In letzter Instanz mussten wir uns zunächst zwischen der [Google Maps API]http://(developers.google.com/maps/) und OpenLayers entscheiden, welche in ihrer Funktionalität sehr ähnlich sind.
 
 Unsere Entscheidung fiel aus folgenden Gründen auf OpenLayers:
 - Open Source
