@@ -47,7 +47,7 @@ Abbildung 1 zeigt den groben Aufbau, welchen wir uns für die Website vorstellen
 
 Zur technischen Realisierung der Präsentation nutzen wir die JavaScript-Bibliothek [OpenLayers](http://openlayers.org). Hierbei handelt es sich um eine JavaScript-API, die es ermöglicht, dynamische Karten auf Webseiten darzustellen.
 
-In letzter Instanz mussten wir uns zunächst zwischen der [Google Maps API](http://(developers.google.com/maps/) und OpenLayers entscheiden, welche in ihrer Funktionalität sehr ähnlich sind.
+In letzter Instanz mussten wir uns zunächst zwischen der [Google Maps API](http://developers.google.com/maps/) und OpenLayers entscheiden, welche in ihrer Funktionalität sehr ähnlich sind.
 
 Unsere Entscheidung fiel aus folgenden Gründen auf OpenLayers:
 - Open Source
