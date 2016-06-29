@@ -1,3 +1,4 @@
+# This Python file uses the following encoding: utf-8
 import tweepy
 import json
 
@@ -19,8 +20,8 @@ search_results = []
 
 for status in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454km",lang="de").items():
 	search_results.append(status._json)
-	print ("Nummer: %5d, Inhalt: %150s" % (count,status.text))
-	count +=1
+	#print ("Nummer: %5d, Inhalt: %150s" % (count,status.text))
+	#count +=1
 
-with open('data/fluechtlinge.json','a') as f:
+with open('~/twitter/data/fluechtlinge.json','a') as f:
 	json.dump(search_results, f)
