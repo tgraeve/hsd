@@ -17,7 +17,7 @@ count = 1
 
 search_results = []
 
-for status in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454km").items():
+for status in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454km",lang="de").items():
 	search_results.append(status._json)
 	print ("Nummer: %5d, Inhalt: %150s" % (count,status.text))
 	count +=1
