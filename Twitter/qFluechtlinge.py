@@ -13,10 +13,6 @@ api = tweepy.API(auth, wait_on_rate_limit=True)
 
 query = "rapefugees OR krimigranten OR stopislam OR deport OR migrantcrisis OR refugeecrisis OR refujihadis OR immivasion"
 
-# tweets = api.search(q="place:%s" % place_id + "#krimigranten")
-# for tweet in tweets:
-#     print tweet.text + " \n\n " +  tweet.place.name if tweet.place else "Undefined place"
-
 count = 1
 
 search_results = []
@@ -26,5 +22,5 @@ for status in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,45
 	print ("Nummer: %5d, Inhalt: %150s" % (count,status.text))
 	count +=1
 
-with open('data/homophobie.json','a') as f:
+with open('data/fluechtlinge.json','a') as f:
 	json.dump(search_results, f)
