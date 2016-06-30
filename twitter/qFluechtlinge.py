@@ -24,5 +24,5 @@ for status in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,45
 	#print ("Nummer: %5d, Inhalt: %150s" % (count,status.text))
 	#count +=1
 
-with open('data/fluechtlinge.json','a') as f:
+with open('/home/hsd/twitter/data/fluechtlinge.json','a') as f:
 	json.dump(search_results, f)
