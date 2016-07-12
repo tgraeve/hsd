@@ -15,15 +15,12 @@ api = tweepy.API(auth, wait_on_rate_limit=True)
 
 query = "rapefugees OR krimigranten OR stopislam OR deport OR migrantcrisis OR refugeecrisis OR refujihadis OR immivasion"
 
-count = 1
+count = 0
 
-search_results = []
-
-for status in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454km",lang="de").items():
-	search_results.append(status._json)
-	#print ("Nummer: %5d, Inhalt: %150s" % (count,status.text))
+for tweet in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454km",lang="de").items():
+	with open('/home/hsd/twitter/data/fluechtlinge.json','a') as f:
+		json.dump(tweet._json, f)
+		f.write("\n")
 	count +=1
 
-with open('/home/hsd/twitter/data/fluechtlinge.json','a') as f:
-	json.dump(search_results, f)
 print ("Crawled %5d Tweets" % (count))
