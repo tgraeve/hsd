@@ -3,82 +3,63 @@
 <head>
 	<meta charset="utf-8"/>
 <title>deutschlandhasst.de</title>
-<script src="http://maps.googleapis.com/maps/api/js"></script>
-<script>
-	function initialize() {
-		var mapProp = {
-			center : new google.maps.LatLng(51.2, 10.1),
-			zoom : 6,
-			mapTypeId : google.maps.MapTypeId.ROADMAP
-		};
-		var map = new google.maps.Map(document.getElementById("googleMap"),
-				mapProp);
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+  <script type='text/javascript'>
+   google.load('visualization', '1', {'packages': ['geochart']});
+   google.setOnLoadCallback(drawRegionsMap);
 
-		var layer = new google.maps.FusionTablesLayer({
-			query : {
-				select : 'geometry',
-				from : '1nBl1Y_cJ3vJijOwohQldmu41kYxKn1qAqfWminaf'
-			},
-			styles : [ {
-				polygonOptions : {
-					fillColor : '#FF0000',
-					fillOpacity : 0.6
-				}
-			}, {
-				where : 'tweets < 300',
-				polygonOptions : {
-					fillColor : '#dc6900'
-				}
-			}, {
-				where : 'tweets < 600' && 'tweets >= 300',
-				polygonOptions : {
-					fillColor : '#eb8c00'
-				}
-			}, {
-				where : 'tweets < 900' && 'tweets >= 600',
-				polygonOptions : {
-					fillColor : '#e0301e'
-				}
-			}, {
-				where : 'tweets < 1400' && 'tweets >= 900',
-				polygonOptions : {
-					fillColor : '#a32020'
-				}
-			}, {
-				where : 'tweets > 1400' && 'tweets < 3000',
-				polygonOptions : {
-					fillColor : '#602320'
-				}
-			} ]
-		});
-		layer.setMap(map);
+    function drawRegionsMap() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Country');
+      data.addColumn('number', 'Tweets');
+      data.addRows([
+            ['Baden-Württemberg', 500],
+            ['Bayern', 1300],
+            ['Berlin', 450],
+            [{f: 'Brandenburg', v: 'DE-BB'}, 800],
+            ['Bremen', 300],
+            ['Hamburg', 250],
+            ['Hessen', 500],
+            ['Mecklenburg-Vorpommern', 750],
+            ['Niedersachsen', 485],
+            ['Nordrhein-Westfalen', 1000],
+            ['Rheinland-Pfalz', 740],
+            ['Saarland', 600],
+            ['Sachsen', 684],
+            ['Sachsen-Anhalt', 412],
+            ['Schleswig-Holstein', 623],
+            ['Thüringen', 500]]);
 
-	}
 
-	google.maps.event.addDomListener(window, 'load', initialize);
-</script>
+      var options = {'title':'Verteilung in Deutschland', 'region':'DE', 'resolution':'provinces'};
+
+      var container = document.getElementById('map_canvas');
+      var geochart = new google.visualization.GeoChart(container);
+      geochart.draw(data, options);
+  };
+  </script>
 </head>
 
 <body>
-	<div id="googleMap" style="width: 700px; height: 700px;"></div>
-
-	<h1
-		style="position: absolute; top: 1px; left: 750px; font-family: Helvetica; font-size: 40px">
+  <div id='map_canvas' style="width: 100%; height: 100%;"></div>
+  
+  <h1
+		style="position: absolute; top: 1px; left: 03%; width: 40%; font-family: Helvetica; font-size: 40px">
 		Willkommen auf deutschlandhasst.de</h1>
 
 	<h2
-		style="position: absolute; top: 100px; left: 750px; font-family: Helvetica;">
+		style="position: absolute; top: 150px; left: 03%; width: 20%; font-family: Helvetica;">
 		Das Projekt</h2>
 
 	<p
-		style="position: absolute; top: 150px; left: 750px; width: 750px; font-family: Helvetica;">
+		style="position: absolute; top: 200px; left: 03%; width: 30%; font-family: Helvetica;">
 		Dieses Projekt hat zum Ziel, Hatespeech aus dem Internet in die
 		Realität zu holen und die Verbreitung von Hasskommentaren greifbarer
 		zu machen. Hierzu sollen die Ursprünge des Hatespeech auf einer Karte
 		verzeichnet werden und dem Nutzer somit ein Gefühl für sein digitales
 		Umfeld vermitteln. Das Projekt beschränkt sich geografisch auf
 		Deutschland und sprachlich auf die deutsche Sprache.</p>
-
+  
 </body>
 
 </html>
