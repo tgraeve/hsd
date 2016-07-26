@@ -13,7 +13,7 @@ auth = tweepy.AppAuthHandler(consumer_key,consumer_secret)
 
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
-query = "rapefugees OR krimigranten OR stopislam OR deport OR migrantcrisis OR refugeecrisis OR refujihadis OR immivasion"
+query = "rapefugees OR krimigranten OR stopislam OR deport OR migrantcrisis OR refugeecrisis OR refujihadis OR immivasion OR merkills"
 
 count = 0
 
