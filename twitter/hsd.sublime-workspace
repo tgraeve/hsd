@@ -1,0 +1,547 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"searh",
+				"search_results"
+			],
+			[
+				"js",
+				"jsonFile〔variable〕"
+			],
+			[
+				"csv",
+				"csvWriter〔variable〕"
+			],
+			[
+				"json",
+				"jsonData〔variable〕"
+			],
+			[
+				"my",
+				"myStreamListener"
+			],
+			[
+				"Strea",
+				"Stream"
+			],
+			[
+				"M",
+				"MyStreamListener"
+			],
+			[
+				"Stream",
+				"StreamListener"
+			],
+			[
+				"twitter",
+				"twitter-files"
+			],
+			[
+				"acc",
+				"access_secret"
+			],
+			[
+				"co",
+				"consumer_secret"
+			],
+			[
+				"consum",
+				"consumer_key"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"sqli",
+				"sqliteerror"
+			],
+			[
+				"sq",
+				"sqlite_open"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "qBehinderung.py",
+			"settings":
+			{
+				"buffer_size": 803,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "qFluechtlinge.py",
+			"settings":
+			{
+				"buffer_size": 921,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "qHomophobie.py",
+			"settings":
+			{
+				"buffer_size": 805,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/twitter/json2csv.py",
+			"settings":
+			{
+				"buffer_size": 309,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/twitter/tweetSentiment.py",
+			"settings":
+			{
+				"buffer_size": 291,
+				"line_ending": "Unix",
+				"name": "from alchemyapi import AlchemyAPI"
+			}
+		},
+		{
+			"file": "/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/twitter/tweepyStream2JSON.py",
+			"settings":
+			{
+				"buffer_size": 1249,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/twitter/exJson2Cons.py",
+			"settings":
+			{
+				"buffer_size": 536,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 87.0,
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Preferences: Browse Packages"
+			],
+			[
+				"latexin",
+				"LaTeXing: Buy a License"
+			],
+			[
+				"late",
+				"LaTeXing: Buy a License"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/twitter/test.py",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/twitter/test2csv.py",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/Twitter/test",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/Twitter/json2csv.py",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/Twitter/test.csv",
+		"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.py",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/Twitter/qHomophobie.py",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/Twitter/homophobie2.json",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/Twitter/homophobie.json",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/Twitter/tweepyStreamTest.py",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/Twitter/data/homophobie.json",
+		"/Users/Tobias/Library/Application Support/Sublime Text 2/Packages/Package Control/Package Control.sublime-settings",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/Crawler/tweepyStreamTest.py",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/Crawler/NltkTwythonTest.py",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/.gitignore",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/Crawler/qFluechtlinge.py",
+		"/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/Crawler/twitter-files/credentials.txt",
+		"/Users/Tobias/Downloads/config.php",
+		"/Users/Tobias/Desktop/Schützen/style.css",
+		"/Users/Tobias/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/Tobias/Downloads/addressbook.php",
+		"/Users/Tobias/Downloads/weather.php",
+		"/Users/Tobias/Downloads/SQLitePrintTest.php",
+		"/Users/Tobias/Dropbox/Studium/BA II/text2network/src/main/java/thecking/text2network/Start.java"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"} {",
+			"contributors",
+			"text",
+			"place",
+			"coord",
+			"geo",
+			"location",
+			"geo",
+			"location",
+			"div",
+			"border",
+			"entry-header",
+			"entry",
+			"color",
+			"1449",
+			"abstract",
+			"r/",
+			"0/",
+			"d/",
+			"c/",
+			"b/",
+			"a/",
+			"9/",
+			"8/",
+			"7/",
+			"6/",
+			"5/",
+			"4/",
+			"3/",
+			"2/",
+			"1/",
+			"2/",
+			"1/",
+			"\"/ \"",
+			"/+ ",
+			"/ ",
+			"1/",
+			"/+ ",
+			"/ ",
+			"/h\n/ ",
+			"/h\n",
+			"/ \n",
+			"/\n"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"}\n{",
+			"r/images",
+			"0/images",
+			"d/images",
+			"c/images",
+			"b/images",
+			"a/images",
+			"9/images",
+			"8/images",
+			"7/images",
+			"6/images",
+			"5/images",
+			"4/images",
+			"3/images",
+			"2/images",
+			"1/images",
+			"/images"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "qBehinderung.py",
+					"settings":
+					{
+						"buffer_size": 803,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								691,
+								691
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "qFluechtlinge.py",
+					"settings":
+					{
+						"buffer_size": 921,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								267,
+								267
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "qHomophobie.py",
+					"settings":
+					{
+						"buffer_size": 805,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								532,
+								532
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/twitter/json2csv.py",
+					"settings":
+					{
+						"buffer_size": 309,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								279,
+								279
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/twitter/tweetSentiment.py",
+					"settings":
+					{
+						"buffer_size": 291,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								188,
+								188
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"auto_name": "from alchemyapi import AlchemyAPI",
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/twitter/tweepyStream2JSON.py",
+					"settings":
+					{
+						"buffer_size": 1249,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13,
+								13
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/Users/Tobias/ownCloud/Master/Praxisprojekt Zesch/hsd/twitter/exJson2Cons.py",
+					"settings":
+					{
+						"buffer_size": 536,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								137,
+								137
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 171.0,
+	"status_bar_visible": true
+}
