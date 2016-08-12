@@ -2,3 +2,6 @@
 .json
 .sublime-project
 .sublime-workspace
+.pyc
+.json
+.csv
