@@ -1,7 +1,7 @@
 .DS_Store
-.json
-.sublime-project
-.sublime-workspace
-.pyc
-.json
-.csv
+*.json
+*.sublime-project
+*.sublime-workspace
+*.pyc
+*.json
+*.csv
