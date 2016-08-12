@@ -31,8 +31,8 @@ with open("data/fluechtlinge.json") as jsonFile:
 			},
 			"text" : text
 		}
-	)
-	print result.inserted_id
+		)
+		print result.inserted_id
 
 print "soweit, so gut..."
 
