@@ -65,6 +65,7 @@ li.dropdown{
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
 .active {
     background-color: #4CAF50;
 }
@@ -101,6 +102,29 @@ li.dropdown{
         background-color: #111;
         color: white;
       }
+
+#textArea {
+  display: none;
+  background-color: #333;
+        border: 1px solid #999;
+        left: 0.5%;
+        padding: 5px;
+        position: absolute;
+        top: 95px;
+        z-index: 6;
+}
+
+#textArea2 {
+  display: none;
+  background-color: #333;
+        border: 1px solid #999;
+        left: 0.5%;
+        padding: 5px;
+        position: absolute;
+        top: 400px;
+        z-index: 6;
+}
+
     </style>
   </head>
 
@@ -108,15 +132,14 @@ li.dropdown{
       
 <ul>
   <li class="dropdown">
-
     <a href="#" class="dropbtn" onclick="LoadFile();">Flüchtlinge</a>
     <div class="dropdown-content">
       <a href="#">Link 1</a>
       </div>
   </li>
+  <li><a href="#" onclick="toggleTextArea();">Flüchtlinge Wort-Unigramme</a></li>
+  <li><a href="#" onclick="toggleTextArea2();">Flüchtlinge Wort-Bigramme</a></li>
   <li><a href="#" onclick="LoadFile2();">Wacken</a></li>
-  <li><a href="#contact">Contact</a></li>
-  <li><a href="#about">About</a></li>
 </ul>
 
       <iframe id="frmFile" src="visualization/txt/fluecht_coordsBACKUP_ALL_WITHOUT_GER.txt" onload="LoadFile();" style="display: none;"></iframe>
@@ -127,8 +150,60 @@ li.dropdown{
       <button onclick="changeGradient()">Change gradient</button>
     </div>
     <div id="map"></div>
+
+    <div id="textArea">
+      <h4 style="color:white;">Die 10 häufigsten Wort-Unigramme</h4>
+      <p style="color:white;">
+        1. : #stopislam<br> 
+        2. : #rapefugees<br>
+        3. : #islam<br>
+        4. : #krimigranten<br>
+        5. : rapefugees<br>
+        6. : #merkel<br>
+        7. : religion<br>
+        8. : kind<br>
+        9. : #afd<br>
+        10. : #islamisierung<br>
+      </p>
+    </div>
+
+    <div id="textArea2">
+      <h4 style="color:white;">Die 10 häufigsten Wort-Bigramme</h4>
+      <p style="color:white;">
+        1. : #islam, #stopislam<br> 
+        2. : #stopislam, #islamisierung<br>
+        3. : religion, frieden<br>
+        4. : stück, #stopislam<br>
+        5. : kind, #stopislam<br>
+        6. : #stopislam, #nomoremuslimigration<br>
+        7. : #brexit, #stopislam<br>
+        8. : #islam, #rapefugees<br>
+        9. : bt, #islam<br>
+        10. : bundestag, bt<br>
+      </p>
+    </div>
     
     <script>
+
+function toggleTextArea() {
+   if (document.getElementById('textArea').style.display == "none"){
+    document.getElementById('textArea').style.display = "block";
+   }
+   else{
+    document.getElementById('textArea').style.display = "none";
+   }
+
+}
+
+function toggleTextArea2() {
+   if (document.getElementById('textArea2').style.display == "none"){
+    document.getElementById('textArea2').style.display = "block";
+   }
+   else{
+    document.getElementById('textArea2').style.display = "none";
+   }
+
+}
         
          var latLonArray;
          var arrLength;
