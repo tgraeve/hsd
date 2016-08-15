@@ -7,6 +7,7 @@ from collections import Counter
 import treetaggerwrapper
 from nltk import bigrams
 from nltk import trigrams
+from nltk import FreqDist
 
 class TreeTagger: #nutzt den TreeTagger Ansatz
 	tagger = treetaggerwrapper.TreeTagger(TAGLANG='de')
@@ -43,26 +44,54 @@ class TreeTagger: #nutzt den TreeTagger Ansatz
 		return count_all
 
 class ngrams:
-
 	def __init__(self):
 		pass
 
-# STOPWORD REMOVAL IN PREPROCESS?
-	@staticmethod
-	def bigrams(path):
+	def bigrams(self,path): #bildet bigrams aus NN-Tokens
+		tagger = TreeTagger()
+		all_bigrams = []
 		twStop = set(io.open('resources/german_stopwords.txt', encoding='utf-8').read().splitlines())
 		with io.open(path, 'r') as jsonFile:
 			for line in jsonFile:
 				tokens = []
 				tweet = json.loads(line)
 				text = preprocessTweetText(tweet['text'])
-				tags = TreeTagger.tagText(text)
+				tags = tagger.tagText(text)
 				for tag in tags:
 					if type(tag).__name__ is "Tag":
 						if tag.pos == "NN" and tag.lemma not in twStop and len(tag.lemma.encode('utf-8')) >1:
 							tokens.append(tag.lemma)
-				bi_tokens = bigrams(tokens)
-				print [(item) for item in sorted(set(bi_tokens))]
+				bi_tokens = list(bigrams(tokens))
+				if bi_tokens:
+					for i in bi_tokens:
+						all_bigrams.append(i)
+		return all_bigrams
+
+	def bigram_fd(self,path,toText=False):
+		tagger = TreeTagger()
+		all_bigrams = []
+		twStop = set(io.open('resources/german_stopwords.txt', encoding='utf-8').read().splitlines())
+		with io.open(path, 'r') as jsonFile:
+			for line in jsonFile:
+				tokens = []
+				tweet = json.loads(line)
+				text = preprocessTweetText(tweet['text'])
+				tags = tagger.tagText(text)
+				for tag in tags:
+					if type(tag).__name__ is "Tag":
+						if tag.pos == "NN" and tag.lemma not in twStop and len(tag.lemma.encode('utf-8')) >1:
+							tokens.append(tag.lemma.encode('utf-8'))
+				bi_tokens = list(bigrams(tokens))
+				if bi_tokens:
+					for i in bi_tokens:
+						all_bigrams.append(i)
+		fd = FreqDist(all_bigrams)
+		if toText:
+			with open(path.replace(".json",".txt"),'w') as f:
+				for item in fd.most_common():
+					f.write(item[0][0]+","+item[0][1]+"; "+str(item[1])+"\n")
+		else:
+			return fd
 
 
 def preprocessTweetText(text):
