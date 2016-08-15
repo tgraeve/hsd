@@ -20,13 +20,14 @@ ul {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 6
 }
 
 li {
     float: left;
 }
 
-li a {
+li a, .dropbtn {
     display: block;
     color: white;
     text-align: center;
@@ -34,10 +35,36 @@ li a {
     text-decoration: none;
 }
 
-li a:hover:not(.active) {
+li a:hover, .dropdown:hover .dropbtn {
     background-color: #111;
 }
 
+li.dropdown{
+  display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+  color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
 .active {
     background-color: #4CAF50;
 }
@@ -80,8 +107,14 @@ li a:hover:not(.active) {
   <body>  
       
 <ul>
-  <li><a class="active" onclick="LoadFile();">Flüchtlinge</a></li>
-  <li><a onclick="LoadFile2();">Wacken</a></li>
+  <li class="dropdown">
+
+    <a href="#" class="dropbtn" onclick="LoadFile();">Flüchtlinge</a>
+    <div class="dropdown-content">
+      <a href="#">Link 1</a>
+      </div>
+  </li>
+  <li><a href="#" onclick="LoadFile2();">Wacken</a></li>
   <li><a href="#contact">Contact</a></li>
   <li><a href="#about">About</a></li>
 </ul>
