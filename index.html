@@ -46,8 +46,6 @@
     <div id="floating-panel">
       <button onclick="toggleHeatmap()">Toggle Heatmap</button>
       <button onclick="changeGradient()">Change gradient</button>
-      <button onclick="changeRadius()">Change radius</button>
-      <button onclick="changeOpacity()">Change opacity</button>
     </div>
     <div id="map"></div>
     
@@ -123,14 +121,6 @@ function changeGradient() {
     'rgba(255, 0, 0, 1)'
   ]
   heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
-}
-
-function changeRadius() {
-  heatmap.set('radius', heatmap.get('radius') ? null : 30);
-}
-
-function changeOpacity() {
-  heatmap.set('opacity', heatmap.get('opacity') ? null : 0.9);
 }
 
 // Heatmap data
