@@ -62,10 +62,11 @@ li a:hover:not(.active) {
       #floating-panel {
         background-color: #fff;
         border: 1px solid #999;
-        left: 50%;
+        left: 89%;
+        right: 0.5%;
         padding: 5px;
         position: absolute;
-        top: 50px;
+        top: 90px;
         z-index: 5;
       }
     </style>
@@ -83,7 +84,7 @@ li a:hover:not(.active) {
       <iframe id="frmFile" src="visualization/txt/fluecht_coordsBACKUP_ALL_WITHOUT_GER.txt" onload="LoadFile();" style="display: none;"></iframe>
       
     <div id="floating-panel">
-      <button onclick="toggleHeatmap()">Toggle Heatmap</button>
+      <button onclick="toggleHeatmap()">Toggle heatmap</button>
       <button onclick="changeGradient()">Change gradient</button>
     </div>
     <div id="map"></div>
