@@ -97,6 +97,8 @@ function initMap() {
     data: getPoints(),
     map: map
   });
+  heatmap.set('radius', heatmap.get('radius') ? null : 30);
+  heatmap.set('opacity', heatmap.get('opacity') ? null : 0.9);
 }
 
 function toggleHeatmap() {
