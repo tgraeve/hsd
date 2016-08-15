@@ -40,7 +40,7 @@ class TreeTagger: #nutzt den TreeTagger Ansatz
 				if type(tag).__name__ is "Tag":
 					if tag.pos == "NN" and tag.lemma not in self.twStop and len(tag.lemma.encode('utf-8')) >1:
 						print tag.lemma
-						count_all.update([tag.lemma])
+						count_all.update([tag.lemma.lower().encode('utf-8')])
 		return count_all
 
 class ngrams:
@@ -60,7 +60,7 @@ class ngrams:
 				for tag in tags:
 					if type(tag).__name__ is "Tag":
 						if tag.pos == "NN" and tag.lemma not in twStop and len(tag.lemma.encode('utf-8')) >1:
-							tokens.append(tag.lemma)
+							tokens.append(tag.lemma.lower().encode('utf-8'))
 				bi_tokens = list(bigrams(tokens))
 				if bi_tokens:
 					for i in bi_tokens:
@@ -80,7 +80,7 @@ class ngrams:
 				for tag in tags:
 					if type(tag).__name__ is "Tag":
 						if tag.pos == "NN" and tag.lemma not in twStop and len(tag.lemma.encode('utf-8')) >1:
-							tokens.append(tag.lemma.encode('utf-8'))
+							tokens.append(tag.lemma.lower().encode('utf-8'))
 				bi_tokens = list(bigrams(tokens))
 				if bi_tokens:
 					for i in bi_tokens:
@@ -96,6 +96,7 @@ class ngrams:
 
 def preprocessTweetText(text):
 
-	uml_text = text.lower().replace(u'\u201c','').replace(u'\u201e','').replace(u'\u00c4','Ae').replace(u'\u00e4','ae').replace(u'\u00d6','Oe').replace(u'\u00f6','oe').replace(u'\u00dc','Ue').replace(u'\u00fc','ue')
-	cleared_text = re.sub(r"\@\w+", "", uml_text) #entfernt alle mentions, beginnend mit @
+	uml_text = text.replace(u'\u201c','').replace(u'\u201e','').replace(u'\u00c4','Ae').replace(u'\u00e4','ae').replace(u'\u00d6','Oe').replace(u'\u00f6','oe').replace(u'\u00dc','Ue').replace(u'\u00fc','ue')
+	low_text = uml_text.lower()
+	cleared_text = re.sub(r"\@\w+", "", low_text) #entfernt alle mentions, beginnend mit @
 	return cleared_text
