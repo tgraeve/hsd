@@ -80,13 +80,14 @@ li a:hover:not(.active) {
   <body>  
       
 <ul>
-  <li><a class="active" href="#home">Home</a></li>
-  <li><a href="#news">News</a></li>
+  <li><a class="active" onclick="LoadFile();">Flüchtlinge</a></li>
+  <li><a onclick="LoadFile2();">Wacken</a></li>
   <li><a href="#contact">Contact</a></li>
   <li><a href="#about">About</a></li>
 </ul>
 
       <iframe id="frmFile" src="visualization/txt/fluecht_coordsBACKUP_ALL_WITHOUT_GER.txt" onload="LoadFile();" style="display: none;"></iframe>
+      <iframe id="frmFile2" src="visualization/txt/wacken_coordsBACKUP_ALL.txt" style="display: none;"></iframe>
       
     <div id="floating-panel">
       <button onclick="toggleHeatmap()">Toggle heatmap</button>
@@ -125,9 +126,50 @@ function LoadFile() {
         //alert((i+1) + ", 2: " + latLonArray[i][1]);
     }
     
+    initLayer();
+}
+
+function LoadFile2() {
+    var oFrame = document.getElementById("frmFile2");
+    var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+    while (strRawContents.indexOf("\r") >= 0)
+        strRawContents = strRawContents.replace("\r", "");
+    var arrLines = strRawContents.split("\n");
+    //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+    latLonArray = new Array(arrLines.length);
+    arrLength = arrLines.length;
+    for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var str1 = curString.replace("\"", "");
+        var str2 = str1.replace("\"", "");
+        var str3 = str2.replace(" ", "");
+        //alert(str3);
+        var curArr = str3.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(2);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        //alert((i+1) + ", 1: " + latLonArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonArray[i][1]);
+    }
+
+    initLayer();
+    
 }
 
 var map, heatmap;
+
+function initLayer() {
+  heatmap.setMap(null);
+  heatmap = new google.maps.visualization.HeatmapLayer({
+    data: getPoints(),
+    map: map
+  });
+  heatmap.set('radius', heatmap.get('radius') ? null : 30);
+  heatmap.set('opacity', heatmap.get('opacity') ? null : 0.9);
+}
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
