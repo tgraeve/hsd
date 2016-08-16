@@ -108,7 +108,7 @@ li.dropdown {
         left: 0.5%;
         padding: 5px;
         position: absolute;
-        top: 95px;
+        top: 120px;
         z-index: 6;
 }
 
@@ -120,7 +120,7 @@ li.dropdown {
         left: 0.5%;
         padding: 5px;
         position: absolute;
-        top: 400px;
+        top: 420px;
         z-index: 6;
 }
 
@@ -131,16 +131,15 @@ li.dropdown {
  
 <div id="dropdown-bar">     
 <ul>
-  <li><a class="active" href="#home">Home</a></li>
-  <li><a href="#news">News</a></li>
   <li class="dropdown">
-    <a href="#" class="dropbtn">Dropdown</a>
-    <div class="dropdown-content">
-      <a href="#">Link 1</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
-    </div>
-  </li>
+      <a href="#" class="dropbtn" onclick="LoadFile();" >Flüchtlinge</a>
+      <div class="dropdown-content">
+        <a href="#" onclick="toggleTextArea();">Wort Unigramme</a>
+        <a href="#" onclick="toggleTextArea2();">Wort Bigramme</a>
+      </div>
+    </li>
+  <li><a href="#" onclick="LoadFile2();">Wacken</a></li>
+  <li><a href="#news">About</a></li>
 </ul>
 </div>
 
