@@ -18,7 +18,7 @@ class TreeTagger: #Funktionen mit TreeTagger Funktionalität
 		pass
 
 	#wendet TreeTagger auf JSON-Tweetdatei an und gibt die Frequency Distribuition aus, sonst namedtuple
-	def tagJson(self,path, asFD=True):
+	def tagJson(self,path, asFD=True, FDtoText=True):
 		tags = []
 		all_NN = []
 		with io.open(path, 'r') as jsonFile:
@@ -34,6 +34,8 @@ class TreeTagger: #Funktionen mit TreeTagger Funktionalität
 			return tags
 		else:
 			tagFD = FreqDist(all_NN)
+			if FDtoText:
+				self.toTextfile(path, tagFD)
 			return tagFD
 
 	#wendet TreeTagger auf Eingabestring an
@@ -53,6 +55,11 @@ class TreeTagger: #Funktionen mit TreeTagger Funktionalität
 						print tag.lemma
 						count_all.update([tag.lemma.lower().encode('utf-8')])
 		return count_all
+
+	def toTextfile(self,path, tags):
+		with open(path.replace(".json","")+"FD"+".txt",'w') as f:
+			for item in tags.most_common():
+				f.write(item[0]+"; "+str(item[1])+"\n")
 
 class ngrams:
 	def __init__(self):
