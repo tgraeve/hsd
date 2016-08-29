@@ -5,9 +5,11 @@ import json
 import re
 from collections import Counter
 import treetaggerwrapper
+import nltk
 from nltk import bigrams
 from nltk import trigrams
 from nltk import FreqDist
+from nltk.collocations import *
 
 class TreeTagger: #nutzt den TreeTagger Ansatz
 	tagger = treetaggerwrapper.TreeTagger(TAGLANG='de')
@@ -66,6 +68,29 @@ class ngrams:
 					for i in bi_tokens:
 						all_bigrams.append(i)
 		return all_bigrams
+
+	def collocations(self,path):
+		tagger = TreeTagger()
+		bigram_measures = nltk.collocations.BigramAssocMeasures()
+		scored_tokens = []
+		twStop = set(io.open('resources/german_stopwords.txt', encoding='utf-8').read().splitlines())
+		with io.open(path, 'r') as jsonFile:
+			for line in jsonFile:
+				tokens = []
+				tweet = json.loads(line)
+				text = preprocessTweetText(tweet['text'])
+				tags = tagger.tagText(text)
+				for tag in tags:
+					if type(tag).__name__ is "Tag":
+						if tag.pos == "NN" and tag.lemma not in twStop and len(tag.lemma.encode('utf-8')) >1:
+							tokens.append(tag.lemma.lower().encode('utf-8'))
+				finder = BigramCollocationFinder.from_words(tokens)
+				scored = finder.score_ngrams(bigram_measures.raw_freq)
+				if scored:
+					for i in scored:
+						scored_tokens.append(i)
+
+		return sorted(bigram for bigram, score in scored_tokens)
 
 	def bigram_fd(self,path,toText=False):
 		tagger = TreeTagger()
