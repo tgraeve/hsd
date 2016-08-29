@@ -11,23 +11,32 @@ from nltk import trigrams
 from nltk import FreqDist
 from nltk.collocations import *
 
-class TreeTagger: #nutzt den TreeTagger Ansatz
+class TreeTagger: #Funktionen mit TreeTagger Funktionalität
 	tagger = treetaggerwrapper.TreeTagger(TAGLANG='de')
 	twStop = set(io.open('resources/german_stopwords.txt', encoding='utf-8').read().splitlines())
 	def __init__(self):
 		pass
 
-	#tagged JSON Tweets und gibt Tag Objekte als namedtuple aus.
-	def tagJson(self,path):
+	#wendet TreeTagger auf JSON-Tweetdatei an und gibt die Frequency Distribuition aus, sonst namedtuple
+	def tagJson(self,path, asFD=True):
 		tags = []
+		all_NN = []
 		with io.open(path, 'r') as jsonFile:
 			for line in jsonFile:
 				tweet = json.loads(line)
 				text = preprocessTweetText(tweet['text'])
-				tag = self.tagText(text)
-				tags.append(tag)
-		return tags
+				tags = self.tagText(text)
+				for tag in tags:
+					if type(tag).__name__ is "Tag":
+						if tag.pos == "NN" and tag.lemma not in self.twStop and len(tag.lemma.encode('utf-8')) >1:
+							all_NN.append(tag.lemma.lower().encode('utf-8'))
+		if not asFD:
+			return tags
+		else:
+			tagFD = FreqDist(all_NN)
+			return tagFD
 
+	#wendet TreeTagger auf Eingabestring an
 	def tagText(self,text):
 		cleared_text = preprocessTweetText(text)
 		tags = self.tagger.tag_text(cleared_text, notagemail=True, notagdns=True)
