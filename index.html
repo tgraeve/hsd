@@ -13,8 +13,7 @@
       <li class="dropdown">
           <a href="#" class="dropbtn" onclick="LoadFile();" >Flüchtlinge</a>
           <div class="dropdown-content">
-            <a href="#" onclick="toggleTextArea();">Wort Unigramme</a>
-            <a href="#" onclick="toggleTextArea2();">Wort Bigramme</a>
+            <a href="#" onclick="toggleWordFD();">Wort Unigramme</a>
           </div>
         </li>
       <li><a href="#" onclick="LoadFile2();">Wacken</a></li>
@@ -28,24 +27,25 @@
     <button onclick="toggleHeatmap()">Toggle heatmap</button>
     <button onclick="changeGradient()">Change gradient</button>
   </div>
+
+  <div id="map"></div>
+
+  <div id="wordFD">
+    <p>
+    TEST<br>
+    TEST<br>
+    TEST<br>
+    </p>
+  </div>
  
   <script>
 
-    function toggleTextArea() {
-      if (document.getElementById('textArea').style.display == "none"){
-        document.getElementById('textArea').style.display = "block";
+    function toggleWordFD() {
+      if (document.getElementById('wordFD').style.display != "block"){
+        document.getElementById('wordFD').style.display = "block";
       }
       else{
-        document.getElementById('textArea').style.display = "none";
-      }
-    }
-
-    function toggleTextArea2() {
-      if (document.getElementById('textArea2').style.display == "none"){
-        document.getElementById('textArea2').style.display = "block";
-      }
-      else{
-        document.getElementById('textArea2').style.display = "none";
+        document.getElementById('wordFD').style.display = "none";
       }
     }
         
