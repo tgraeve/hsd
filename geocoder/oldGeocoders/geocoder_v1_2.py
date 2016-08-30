@@ -51,3 +51,5 @@ print "------------------ geocoder.py FINISHED ------------------"
 
 ifile.close()
 #ofile.close()
+
+#dropout: 0,43
