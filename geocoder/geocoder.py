@@ -6,8 +6,8 @@ import json
 ifile = open('db/staedte.csv', "r")
 csvReader = csv.reader(ifile, delimiter='\n')
 
-#ofile = open('wacken_coords.txt', "wb")
-#writer = csv.writer(ofile, delimiter=',', quotechar = '"', quoting=csv.QUOTE_MINIMAL)
+ofile = open('noMatchFound.txt', "wb")
+writer = csv.writer(ofile, delimiter=' ', quotechar = '"', quoting=csv.QUOTE_MINIMAL)
 
 with open("../visualization/json/homophobie.json", 'r') as f:
 	countTweets = 0
@@ -38,6 +38,8 @@ with open("../visualization/json/homophobie.json", 'r') as f:
 							endSearch = True
 							print "---FOUND MATCH--- : " + cityName
 							countMatches += 1
+				if endSearch == False:
+					writer.writerow([userPlace])
 
 		ifile.seek(0)
 
@@ -50,4 +52,4 @@ print "Dropout: " + str(dropout)
 print "------------------ geocoder.py FINISHED ------------------"
 
 ifile.close()
-#ofile.close()
+ofile.close()
