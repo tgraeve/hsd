@@ -22,22 +22,20 @@ with open("../visualization/json/homophobie.json", 'r') as f:
 		# 		if row[2] == (tweetPlace):
 		# 			print "Stadt: " + row[2] + ", Einwohner: " + row[9]
 		if (tweet['user']['location'] is not None):
+			countTweets += 1
 			endSearch = False
 			userPlace = tweet['user']['location'].encode('utf-8')
-			userPlaceStrip = userPlace.strip(' \t\n\r')
-			if (userPlaceStrip != ""):
-				countTweets += 1
-				print userPlace
-				userPlaceSplitC = userPlace.split(',')
-				userPlaceSplitS = userPlace.split(' ')
-				for row in csvReader:
-					if (endSearch == False):
-						cityName = str(row[0])
-						#print cityName
-						if (cityName in userPlaceSplitC or cityName in userPlaceSplitS):
-							endSearch = True
-							print "---FOUND MATCH--- : " + cityName
-							countMatches += 1
+			print userPlace
+			userPlaceSplitC = userPlace.split(',')
+			userPlaceSplitS = userPlace.split(' ')
+			for row in csvReader:
+				if (endSearch == False):
+					cityName = str(row[0])
+					#print cityName
+					if (cityName in userPlaceSplitC or cityName in userPlaceSplitS):
+						endSearch = True
+						print "---FOUND MATCH--- : " + cityName
+						countMatches += 1
 
 		ifile.seek(0)
 
@@ -51,3 +49,5 @@ print "------------------ geocoder.py FINISHED ------------------"
 
 ifile.close()
 #ofile.close()
+
+#Dropout: 0,47
