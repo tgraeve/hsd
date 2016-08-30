@@ -41,9 +41,9 @@ with open("../visualization/json/homophobie.json", 'r') as f:
 print "Anzahl Tweets mit User-Location Angabe: " + str(countTweets)
 print "Anzahl erfolgreicher Zuordnungen zu Staedten: " + str(countMatches)
 
-acc = float(countMatches)/float(countTweets)
+dropout = float(1) - (float(countMatches)/float(countTweets))
 
-print "Accuracy: " + str(acc)
+print "Dropout: " + str(dropout)
 print "------------------ geocoder.py FINISHED ------------------"
 
 ifile.close()
