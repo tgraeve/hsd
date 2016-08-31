@@ -13,6 +13,7 @@ with open("../visualization/json/homophobie.json", 'r') as f:
 	countCoords = 0
 	countPlaces = 0
 	countUserLoc = 0
+	countUserLocNotEmpty = 0
 	countMatches = 0
 	for line in f:
 		tweet = json.loads(line)
@@ -23,18 +24,19 @@ with open("../visualization/json/homophobie.json", 'r') as f:
 		elif (tweet['user']['location'] is not None):
 			countUserLoc += 1
 			endSearch = False
-			userPlace = tweet['user']['location'].encode('utf-8')
+			userPlace = tweet['user']['location'].encode('utf-8').lower()
 			userPlaceStrip = userPlace.strip(' \t\n\r')
 			if (userPlaceStrip != ""):
-				#countUserLoc += 1
+				countUserLocNotEmpty += 1
 				print userPlace
 				userPlaceSplitC = userPlace.split(',')
 				userPlaceSplitS = userPlace.split(' ')
+				userPlaceSplitM = userPlace.split('-')
 				for row in csvReader:
 					if (endSearch == False):
-						cityName = str(row[0])
+						cityName = str(row[0]).lower()
 						#print cityName
-						if (cityName in userPlaceSplitC or cityName in userPlaceSplitS):
+						if (cityName in userPlaceSplitC or cityName in userPlaceSplitS or cityName in userPlaceSplitM):
 							endSearch = True
 							print "---FOUND MATCH--- : " + cityName
 							countMatches += 1
