@@ -14,11 +14,12 @@ from nltk.collocations import *
 class TreeTagger: #Funktionen mit TreeTagger Funktionalität
 	tagger = treetaggerwrapper.TreeTagger(TAGLANG='de')
 	twStop = set(io.open('resources/german_stopwords.txt', encoding='utf-8').read().splitlines())
+	query = set(io.open('tagsFluechtlinge.txt', encoding='utf-8').read().splitlines())
 	def __init__(self):
 		pass
 
 	#wendet TreeTagger auf JSON-Tweetdatei an und gibt die Frequency Distribuition aus, sonst namedtuple
-	def tagJson(self,path, asFD=True, FDtoText=True):
+	def tagJson(self,path, asFD=True, FDtoText=True, withQuery=False):
 		tags = []
 		all_NN = []
 		with io.open(path, 'r') as jsonFile:
@@ -30,8 +31,21 @@ class TreeTagger: #Funktionen mit TreeTagger Funktionalität
 					if type(tag).__name__ is "Tag":
 						if tag.pos == "NN" and tag.lemma not in self.twStop and len(tag.lemma.encode('utf-8')) >1:
 							all_NN.append(tag.lemma.lower().encode('utf-8'))
+		if not withQuery:
+			q = ""
+			for tag in self.query:
+				hashtag = "#"+tag
+				i = all_NN.count(tag.encode('utf-8'))
+				j = all_NN.count(hashtag.encode('utf-8'))
+				print hashtag + "; " + str(j)
+				while i > 0:
+					all_NN.remove(tag.encode('utf-8'))
+					i-=1
+				while j > 0:
+					all_NN.remove(hashtag.encode('utf-8'))
+					j-=1
 		if not asFD:
-			return tags
+			return all_NN
 		else:
 			tagFD = FreqDist(all_NN)
 			if FDtoText:
