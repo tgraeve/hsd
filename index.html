@@ -5,22 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>deutschlandhasst</title>
   <link rel="stylesheet" type="text/css" href="visualization/style/map.css">
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?&libraries=visualization&callback=initMap"></script>
+
 </head>
 
 <body>
   <header>
     <h1>deutschlandhasst</h1>
-    <nav>
+     <nav>
       <ul>
         <li><a href="#" onclick="LoadFluechtlinge();">Flüchtlinge</a>
           <ul>
-            <li><a href="#" onclick="toggleWordFD();">Worthäufigkeiten</a></li>
+            <li><a class="dropdown-content" href="#" onclick="toggleWordFD();">Worthäufigkeiten</a></li>
           </ul>
         </li>
         <li><a href="#" onclick="LoadWacken();">Wacken</a></li>
       </ul>
-    </nav>
+  </nav>
   </header>
+
+  <main class="flex-container">
+
+  <div id="beschreibung"><h2>Hier könnte Text stehen!</h2></div>
+  <div id="map"></div>
+
+  <div id="floating-panel">
+    <button onclick="toggleHeatmap()">Toggle heatmap</button>
+    <button onclick="changeGradient()">Change gradient</button>
+  </div>
+
+  <div id="wordFD">
+    <object width="300" height="300" type="text/text" data="twitter/data/fluechtlingeFD.txt" border="0" style="font color:white;" ></object>
+  </div>
+
+
+  </main>
  
   <!-- <div id="dropdown-bar">     
     <ul>
@@ -34,19 +54,9 @@
     </ul>
   </div>
  -->
+  
   <iframe id="frmFile" src="visualization/txt/fluecht_coordsBACKUP_ALL_WITHOUT_GER.txt" onload="LoadFile();" style="display: none;"></iframe>
   <iframe id="frmFile2" src="visualization/txt/wacken_coordsBACKUP_ALL_WITHOUT_GER.txt" style="display: none;"></iframe>
-      
-  <div id="floating-panel">
-    <button onclick="toggleHeatmap()">Toggle heatmap</button>
-    <button onclick="changeGradient()">Change gradient</button>
-  </div>
-
-  <div id="map"></div>
-
-  <div id="wordFD">
-    <object width="300" height="300" type="text/text" data="twitter/data/fluechtlingeFD.txt" border="0" style="font color:white;" ></object>
-  </div>
  
   <script>
 
@@ -180,7 +190,6 @@
      //return [new google.maps.LatLng(52.21231, 11.254687)]    
   }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?&signed_in=true&libraries=visualization&callback=initMap"></script>
 
 </body>
 </html>
