@@ -10,23 +10,23 @@ ofile = open('noMatchFound.txt', "wb")
 writer = csv.writer(ofile, delimiter=' ', quotechar = '"', quoting=csv.QUOTE_MINIMAL)
 
 with open("../visualization/json/homophobie.json", 'r') as f:
-	countTweets = 0
+	countCoords = 0
+	countPlaces = 0
+	countUserLoc = 0
 	countMatches = 0
 	for line in f:
 		tweet = json.loads(line)
-		# if (tweet['place'] is not None):
-		# 	tweetPlaceTemp = tweet['place']['full_name'].split(",")
-		# 	tweetPlace = tweetPlaceTemp[0].upper().encode('utf-8')
-		# 	print tweetPlace					
-		# 	for row in tabReader:
-		# 		if row[2] == (tweetPlace):
-		# 			print "Stadt: " + row[2] + ", Einwohner: " + row[9]
-		if (tweet['user']['location'] is not None):
+		if (tweet['coordinates'] is not None):
+			countCoords += 1
+		elif (tweet['place'] is not None):
+			countPlaces += 1
+		elif (tweet['user']['location'] is not None):
+			countUserLoc += 1
 			endSearch = False
 			userPlace = tweet['user']['location'].encode('utf-8')
 			userPlaceStrip = userPlace.strip(' \t\n\r')
 			if (userPlaceStrip != ""):
-				countTweets += 1
+				#countUserLoc += 1
 				print userPlace
 				userPlaceSplitC = userPlace.split(',')
 				userPlaceSplitS = userPlace.split(' ')
@@ -38,15 +38,15 @@ with open("../visualization/json/homophobie.json", 'r') as f:
 							endSearch = True
 							print "---FOUND MATCH--- : " + cityName
 							countMatches += 1
-				if endSearch == False:
-					writer.writerow([userPlace])
+			if endSearch == False:
+				writer.writerow([userPlace])
 
 		ifile.seek(0)
 
-print "Anzahl Tweets mit User-Location Angabe: " + str(countTweets)
+print "Anzahl Tweets mit User-Location Angabe: " + str(countUserLoc)
 print "Anzahl erfolgreicher Zuordnungen zu Staedten: " + str(countMatches)
 
-dropout = float(1) - (float(countMatches)/float(countTweets))
+dropout = float(1) - (float(countMatches)/float(countUserLoc))
 
 print "Dropout: " + str(dropout)
 print "------------------ geocoder.py FINISHED ------------------"
