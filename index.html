@@ -6,41 +6,96 @@
   <title>deutschlandhasst</title>
   <link rel="stylesheet" type="text/css" href="visualization/style/map.css">
 
-  <script async defer src="https://maps.googleapis.com/maps/api/js?&libraries=visualization&callback=initMap"></script>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+  <script>
+    
+
+    /*burger menu test*/
+    $(document).ready(function(){
+      /* Hier der jQuery-Code */
+      $( ".cross" ).hide();
+      $( ".menu" ).hide();
+      $( ".hamburger" ).click(function() {
+      $( ".menu" ).slideToggle( "slow", function() {
+        $( ".hamburger" ).hide();
+        $( ".cross" ).show();
+      });
+    });
+
+    $( ".cross" ).click(function() {
+      $( ".menu" ).slideToggle( "slow", function() {
+        $( ".cross" ).hide();
+        $( ".hamburger" ).show();
+      });
+    });
+  });
+
+  </script>
+
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?&libraries=visualization&callback=initialize"></script>
 
 </head>
 
 <body>
   <header>
-    <h1>deutschlandhasst</h1>
-     <nav>
-      <ul>
-        <li><a href="#" onclick="LoadFluechtlinge();">Flüchtlinge</a>
-          <ul>
-            <li><a class="dropdown-content" href="#" onclick="toggleWordFD();">Worthäufigkeiten</a></li>
-          </ul>
-        </li>
-        <li><a href="#" onclick="LoadWacken();">Wacken</a></li>
-      </ul>
-  </nav>
+    <input class="hamburger" type="image" src="visualization/style/burger.png" name="menu" />
+      <!-- <button class="hamburger">&#9776;</button> -->
+    <input class="cross" type="image" src="visualization/style/kreuz.png" name="close" />
+      <!-- <button class="cross">&#735;</button> -->
+    <div>deutschlandhasst<br>
+      <div id="untertitel">Hasserfüllte Tweets in Deutschland</div>
+    </div>
   </header>
 
-  <main class="flex-container">
+  <div class="menu">
+  <ul>
+    <a href="#"><li>LINK ONE</li></a>
+    <a href="#"><li>LINK TWO</li></a>
+    <a href="#"><li>LINK THREE</li></a>
+    <a href="#"><li>LINK FOUR</li></a>
+    <a href="#"><li>LINK FIVE</li></a>
+  </ul>
+</div> 
 
-  <div id="beschreibung"><h2>Hier könnte Text stehen!</h2></div>
-  <div id="map"></div>
+ <!--    <nav>
+      <ul>
+        <li><a href="#" onclick="LoadAll();">Twitteraktivität</a>
+          <ul>
+            <li><a class="dropdown-content" href="#" onclick="LoadAllN();">normalisieren</a></li>
+          </ul>
+        </li>
+        <li><a href="#" onclick="LoadFluechtlinge();">Flüchtlinge</a>
+          <ul>
+            <li><a class="dropdown-content" href="#" onclick="LoadFluechtlingeN();">normalisieren</a></li>
+          </ul>
+        </li>
+        <li><a href="#" onclick="LoadHomoph();">Homophobie</a>
+          <ul>
+            <li><a class="dropdown-content" href="#" onclick="LoadHomophN();">normalisieren</a></li>
+          </ul>
+        </li>
+      </ul>
+  </nav> -->
 
-  <div id="floating-panel">
-    <button onclick="toggleHeatmap()">Toggle heatmap</button>
-    <button onclick="changeGradient()">Change gradient</button>
+  <div class="flex-container">
+
+    <div id="beschreibung"><h2>Hier könnte Text stehen!</h2></div>
+
+    <div id="map">
+      <div id="floating-panel">
+        <button onclick="toggleHeatmap()">Toggle heatmap</button>
+        <button onclick="changeGradient()">Change gradient</button>
+      </div>
+    </div>
+   
   </div>
+
 
   <div id="wordFD">
     <object width="300" height="300" type="text/text" data="twitter/data/fluechtlingeFD.txt" border="0" style="font color:white;" ></object>
   </div>
-
-
-  </main>
  
   <!-- <div id="dropdown-bar">     
     <ul>
@@ -55,8 +110,12 @@
   </div>
  -->
   
-  <iframe id="frmFile" src="visualization/txt/fluecht_coordsBACKUP_ALL_WITHOUT_GER.txt" onload="LoadFile();" style="display: none;"></iframe>
-  <iframe id="frmFile2" src="visualization/txt/wacken_coordsBACKUP_ALL_WITHOUT_GER.txt" style="display: none;"></iframe>
+  <iframe id="fluechtCoords" src="visualization/txt/fluecht_Coords.txt" style="display: none;"></iframe>
+  <iframe id="fluechtCoordsN" src="visualization/txt/fluecht_nCoords.txt" style="display: none;"></iframe>
+  <iframe id="allCoords" src="visualization/txt/all_Coords.txt" onload="LoadAll();" style="display: none;"></iframe>
+  <iframe id="allCoordsN" src="visualization/txt/all_nCoords.txt" style="display: none;"></iframe>
+  <iframe id="homophCoords" src="visualization/txt/homoph_Coords.txt" style="display: none;"></iframe>
+  <iframe id="homophCoordsN" src="visualization/txt/homoph_nCoords.txt" style="display: none;"></iframe>
  
   <script>
 
@@ -73,35 +132,7 @@
     var arrLength;
 
     function LoadFluechtlinge() {
-      var oFrame = document.getElementById("frmFile");
-      var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
-      while (strRawContents.indexOf("\r") >= 0)
-          strRawContents = strRawContents.replace("\r", "");
-      var arrLines = strRawContents.split("\n");
-      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
-      latLonArray = new Array(arrLines.length);
-      arrLength = arrLines.length;
-      for (var i = 0; i < arrLines.length; i++) {
-          var curLine = arrLines[i];
-          //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
-          var curString = curLine.toString();
-          var str1 = curString.replace("\"", "");
-          var str2 = str1.replace("\"", "");
-          var str3 = str2.replace(" ", "");
-          //alert(str3);
-          var curArr = str3.split(",");
-          //alert(curArr[1]);
-          latLonArray[i] = new Array(2);
-          latLonArray[i][0] = parseFloat(curArr[0]);
-          latLonArray[i][1] = parseFloat(curArr[1]);
-          //alert((i+1) + ", 1: " + latLonArray[i][0]);
-          //alert((i+1) + ", 2: " + latLonArray[i][1]);
-      }
-      initLayer();
-    }
-
-    function LoadWacken() {
-      var oFrame = document.getElementById("frmFile2");
+      var oFrame = document.getElementById("fluechtCoords");
       var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
       while (strRawContents.indexOf("\r") >= 0)
           strRawContents = strRawContents.replace("\r", "");
@@ -113,20 +144,161 @@
         var curLine = arrLines[i];
         //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
         var curString = curLine.toString();
-        var str1 = curString.replace("\"", "");
-        var str2 = str1.replace("\"", "");
-        var str3 = str2.replace(" ", "");
-        //alert(str3);
-        var curArr = str3.split(",");
+        var curArr = curString.split(",");
         //alert(curArr[1]);
-        latLonArray[i] = new Array(2);
+        latLonArray[i] = new Array(3);
         latLonArray[i][0] = parseFloat(curArr[0]);
         latLonArray[i][1] = parseFloat(curArr[1]);
-        //alert((i+1) + ", 1: " + latLonArray[i][0]);
-        //alert((i+1) + ", 2: " + latLonArray[i][1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
       }
       initLayer();
     }
+
+    function LoadFluechtlingeN() {
+      var oFrame = document.getElementById("fluechtCoordsN");
+            var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
+
+    function LoadAll() {
+      var oFrame = document.getElementById("allCoords");
+            var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
+
+    function LoadAllN() {
+      var oFrame = document.getElementById("allCoordsN");
+            var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
+
+    function LoadHomoph() {
+      var oFrame = document.getElementById("homophCoords");
+      var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
+
+    function LoadHomophN() {
+      var oFrame = document.getElementById("homophCoordsN");
+      var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   var map, heatmap;
 
@@ -140,19 +312,63 @@
     heatmap.set('opacity', heatmap.get('opacity') ? null : 0.9);
   }
 
-  function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
+  function initialize() {
+
+    var styleArray = [
+      { featureType: 'road',
+        elementType: 'geometry',
+        stylers: [
+          { visibility: 'off' }
+        ]
+      },
+      { featureType: 'transit',
+        stylers: [
+          { visibility: 'off' }
+        ]
+      },
+      { featureType: 'landscape',
+        elementType: 'geometry.fill', 
+        stylers: [
+          { color: '#343f43' }
+        ] 
+      },
+      { elementType: 'labels.text',
+        stylers: [
+          { invert_lightness: true }
+        ]
+      },
+      { featureType: 'poi',
+        elementType: 'geometry.fill',
+        stylers: [
+          { color: '#343f43' }
+        ]
+      }
+    ];
+
+    var mapOptions = {
       zoom: 6,
       center: {lat: 51.5, lng: 10.0},
-      mapTypeId: google.maps.MapTypeId.HYBRID
+      mapTypeId: google.maps.MapTypeId.HYBRID,
+      styles: styleArray
+    };
+
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    var center;
+    function calculateCenter() {
+      center = map.getCenter();
+    }
+
+    google.maps.event.addDomListener(map, 'idle', function() {
+      calculateCenter();
     });
 
-    heatmap = new google.maps.visualization.HeatmapLayer({
-      data: getPoints(),
-      map: map
+    google.maps.event.addDomListener(window, 'resize', function() {
+      map.setCenter(center);
     });
-    heatmap.set('radius', heatmap.get('radius') ? null : 30);
-    heatmap.set('opacity', heatmap.get('opacity') ? null : 0.9);
+
+    initLayer();
+
   }
 
   function toggleHeatmap() {
@@ -183,12 +399,15 @@
   function getPoints() {
     var googleArray = new Array(arrLength);
       for (var i = 0; i < arrLength; i++){
-          googleArray[i] = new google.maps.LatLng(latLonArray[i][0], latLonArray[i][1]);
+          googleArray[i] = {location: new google.maps.LatLng(latLonArray[i][0], latLonArray[i][1]), weight: latLonArray[i][2]};
       }
       return googleArray
       //Daten zum Testen des Heatmap-Layers
      //return [new google.maps.LatLng(52.21231, 11.254687)]    
   }
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+
 </script>
 
 </body>
