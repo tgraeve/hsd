@@ -3,13 +3,13 @@
 import csv
 from nltk import FreqDist
 
-ifile = open('txt/matchedCitiesHomoph.txt', "r")
+ifile = open('txt/matchedCitiesAll.txt', "r")
 csvReaderMatches = csv.reader(ifile, delimiter='\n')
 
 ifile2 = open('db/DE.tab', "r")
 csvReaderDB = csv.reader(ifile2, delimiter='\t')
 
-ofileWeighted = open('weightedCoordsHomoph.txt', "wb")
+ofileWeighted = open('weightedCoordsAll.txt', "wb")
 writerCoords = csv.writer(ofileWeighted, delimiter=' ', quotechar='"', quoting= csv.QUOTE_MINIMAL)
 
 cityList = []
@@ -23,8 +23,6 @@ citiesFD = FreqDist(cityList)
 for i in citiesFD.most_common():
 	fdList.append([i[0], i[1]])
 
-#print fdList[0][0]
-
 for item in fdList:
 	for row in csvReaderDB:
 		if (str(item[0]) == str(row[3]).lower() and row[4] not in "" and row[5] not in "" and row[9] not in ""):
@@ -36,4 +34,4 @@ for item in fdList:
 
 	ifile2.seek(0)
 
-print "---normalizer.py FINISHED---"
+print "---normalizerAll.py FINISHED---"
