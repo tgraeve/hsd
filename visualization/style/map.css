@@ -9,29 +9,53 @@ body {
   margin:0;
   padding: 0;
   display: flex;
+  min-height: 100%;
   flex-direction: column;
-  justify-content: space-between;
+}
+
+header, .menu{
+  font-family: grobeDeutschmeister;
 }
 
 header {
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex: 10%;
+  justify-content: center;
+  min-height: 2em;
+  flex: 5%;
   padding: 0.2em;
   background-color: #1E2426;
-  text-align: center;
   font-family: grobeDeutschmeister;
   font-size: 40px;
   color: red;
 }
 
 header div {
-  margin: auto;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
-#untertitel {
+#inhalt {
+  color: white;
+  margin-left: 1%;
+}
+
+#layername {
+  font-size: 30px;
+}
+
+#inhalt, #untertitel, #erklaerung {
   font-size: 20px;
+}
+
+#titel {
+  margin: auto;
+  text-align: center;
+}
+
+#erklaerung {
+  color: white;
+  margin-right: 1%;
 }
 
 .flex-container {
@@ -43,14 +67,28 @@ header div {
   justify-content: flex-start;
 }
 
-#beschreibung {
-  flex:1 30%;
+#map {
+  height: 100%;
 }
 
-#map {
+#wrapper { 
+  height: 100%;
   position: relative;
-  flex: 3 50%;
-  border: 3px solid black;
+}
+
+#over_map {
+  position: absolute;
+  top: 20%;
+  left: 1%;
+  z-index: 99;
+
+}
+
+#menu-overlay {
+  top: 0;
+  left: 0;
+  position: relative;
+
 }
 
 #floating-panel {
@@ -66,52 +104,6 @@ header div {
   top: 10px;
   padding-left: 10px;
 }
- 
-nav {
-  flex: 2%;
-  padding: 0.5em;
-  background-color: #FF0000;
-}
-
-nav a, nav span {
-  font-family: 'Courier New';
-  font-size: 1.5em;
-  color: black;
-  display: block;
-  width: 10em;
-  text-decoration: none;
-}
-
-nav ul {
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-nav li {
-  float: left;
-  padding: 0.1em;
-  position: relative;
-  display: inline-block;
-  border: 1px solid black;
-}
-
-nav ul ul {
-  margin: 0; 
-  padding: 0;
-  position: absolute;
-  font: 0/0 serif;/* Unternavigation ausblenden */
-  z-index: -1;
-}
-
-nav ul ul li {
-  background-color: #FF0000;
-  margin-top: 0.5em;
-}
- 
-nav ul li:hover ul {
-  font: inherit;
-  z-index: auto;   /*  Unternavigation einblenden */
-}
 
 /*
 #map {
@@ -123,12 +115,12 @@ nav ul li:hover ul {
   bottom: 0;
   }*/
 
-button {
+/*button {
   background-color: #111;
   color: white;
-}
+}*/
 
-#wordFD {
+/*#wordFD {
   color:white;
   opacity: 0.9;
   display: none;
@@ -139,25 +131,25 @@ button {
         position: absolute;
         top: 120px;
         z-index: 6;
-}
+}*/
 
 /*Burger Menu Test*/
 
 .hamburger{
-  float: left;
+  margin-left: 1%;
   height: 5em;
   cursor:pointer;
   outline:none;
   z-index:10000000000000;
 }
 .cross{
-  float: left;
+  margin-left: 1%;
   height: 5em;
   cursor:pointer;
   outline:none;
   z-index:10000000000000;
 }
-.menu{z-index:1000000; font-weight:bold; font-size:1.5em; width:20%; background:#1E2426; border-top: white 1px solid; position:absolute; text-align:center;}
+.menu{z-index:1000000; font-size:1.5em; width:20%; background:#1E2426; border-top: rgba(255,255,255,0.1) 1px solid; position:absolute; text-align:center;}
 .menu ul {margin: 0; padding: 0; list-style-type: none; list-style-image: none;}
 .menu li {display: block;   padding:15px 0 15px 0; border-bottom:#1d1f20 1px solid;}
 .menu li:hover{display: block;    background:#181818; padding:15px 0 15px 0; border-bottom:#1d1f20 1px solid;}
