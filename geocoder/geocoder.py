@@ -127,7 +127,7 @@ class hsdGeocoder:
 		ifile = open("txt/" + input + "_matchedCities.txt", "r")
 		csvReaderMatches = csv.reader(ifile, delimiter='\n')
 
-		ifile2 = open("db/DE.tab", "r")
+		ifile2 = open("db/DE_cleanedUp.tab", "r")
 		csvReaderDB = csv.reader(ifile2, delimiter='\t')
 
 		ofile = open(input + "_coords.txt", "wb")
@@ -146,12 +146,9 @@ class hsdGeocoder:
 
 		for item in fdList:
 			for row in csvReaderDB:
-				if (str(item[0]) == str(row[3]).lower() and row[4] not in "" and row[5] not in "" and row[9] not in ""):
-					#print "Liste: " + str(item) + ", Mapping auf: " + str(row[3]).lower() + ", Lat: " + row[4] + ", Lon: " + row[5] + ", Einwohner: " + row[9]
+				if (str(item[0]) == str(row[0])):
 					weight = float(item[1])
-					#print weight
-					writerCoords.writerow([row[4] + "," + row[5] + "," + str("%.1f" % weight)])
-					#writerCount.writerow([str(item[0]) + "," + str(item[1])])
+					writerCoords.writerow([row[1] + "," + row[2] + "," + str("%.1f" % weight)])
 
 			ifile2.seek(0)
 
