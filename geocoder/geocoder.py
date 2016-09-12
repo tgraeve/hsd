@@ -153,3 +153,36 @@ class hsdGeocoder:
 			ifile2.seek(0)
 
 		print "--- cities2coords FINISHED ---"
+
+	@staticmethod
+	def pop_normalizer(input):
+		ifile = open("txt/" + input + "_matchedCities.txt", "r")
+		csvReaderMatches = csv.reader(ifile, delimiter='\n')
+
+		ifile2 = open("db/DE_cleanedUp.tab", "r")
+		csvReaderDB = csv.reader(ifile2, delimiter='\t')
+
+		ofile = open(input + "_coords_pn.txt", "wb")
+		writerCoords = csv.writer(ofile, delimiter=' ', quotechar='"', quoting= csv.QUOTE_MINIMAL)
+
+		cityList = []
+		fdList = []
+
+		for row in csvReaderMatches:
+			cityList.append(row[0])
+
+		citiesFD = FreqDist(cityList)
+
+		for i in citiesFD.most_common():
+			fdList.append([i[0], i[1]])
+
+		for item in fdList:
+			for row in csvReaderDB:
+				if (str(item[0]) == str(row[0])):
+					weight = (float(item[1])/float(row[3])) * 1500000
+					#print weight
+					writerCoords.writerow([row[1] + "," + row[2] + "," + str("%.1f" % weight)])
+					
+			ifile2.seek(0)
+
+		print "--- pop_normalizer FINISHED ---"
