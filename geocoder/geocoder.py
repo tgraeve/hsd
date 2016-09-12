@@ -165,13 +165,13 @@ class hsdGeocoder:
 		ofile = open(input + "_coords_pn.txt", "wb")
 		writerCoords = csv.writer(ofile, delimiter=' ', quotechar='"', quoting= csv.QUOTE_MINIMAL)
 
-		cityList = []
+		matchedCitiesList = []
 		fdList = []
 
 		for row in csvReaderMatches:
-			cityList.append(row[0])
+			matchedCitiesList.append(row[0])
 
-		citiesFD = FreqDist(cityList)
+		citiesFD = FreqDist(matchedCitiesList)
 
 		for i in citiesFD.most_common():
 			fdList.append([i[0], i[1]])
@@ -186,3 +186,51 @@ class hsdGeocoder:
 			ifile2.seek(0)
 
 		print "--- pop_normalizer FINISHED ---"
+
+	@staticmethod
+	def tweet_normalizer(input):
+		ifile = open("txt/" + input + "_matchedCities.txt", "r")
+		csvReaderMatches = csv.reader(ifile, delimiter='\n')
+
+		ifile2 = open("db/DE_cleanedUp.tab", "r")
+		csvReaderDB = csv.reader(ifile2, delimiter='\t')
+
+		ifile3 = open("txt/all_matchedCities.txt", "r")
+		csvReaderTweetCount = csv.reader(ifile3, delimiter='\n')
+
+		ofile = open(input + "_coords_tn.txt", "wb")
+		writerCoords = csv.writer(ofile, delimiter=' ', quotechar='"', quoting= csv.QUOTE_MINIMAL)
+
+		matchedCitiesList = []
+		fdMatchedCities = []
+		allTweetsList = []
+		fdAllTweets = []
+
+		for row in csvReaderMatches:
+			matchedCitiesList.append(row[0])
+
+		matchesFD = FreqDist(matchedCitiesList)
+
+		for i in matchesFD.most_common():
+			fdMatchedCities.append([i[0], i[1]])
+
+		for row in csvReaderTweetCount:
+			allTweetsList.append(row[0])
+
+		allTweetsFD = FreqDist(allTweetsList)
+
+		for i in allTweetsFD.most_common():
+			fdAllTweets.append([i[0], i[1]])
+
+		for i in fdMatchedCities:
+			for row in csvReaderDB:
+				if (str(i[0]) == str(row[0])):
+					for j in fdAllTweets:
+						if(str(i[0]) == str(j[0])):
+							weight = (float(i[1])/float(j[1])) * 1000
+							#print weight
+							writerCoords.writerow([row[1] + "," + row[2] + "," + str("%.1f" % weight)])
+					
+			ifile2.seek(0)
+
+		print "--- tweet_normalizer FINISHED ---"
