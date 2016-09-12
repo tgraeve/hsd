@@ -4,4 +4,7 @@ from geocoder import hsdGeocoder
 
 g = hsdGeocoder()
 
-g.json2cities("allOld")
+#g.json2cities("homophobie")
+g.cities2coords("homophobie")
+
+print "--- main.py FINISHED ---"

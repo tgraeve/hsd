@@ -4,6 +4,7 @@ import time
 import csv
 import json
 from geopy.geocoders import Nominatim
+from nltk import FreqDist
 
 class hsdGeocoder:
 
@@ -111,7 +112,7 @@ class hsdGeocoder:
 			#dropout = float(1) - (float(countMatches)/float(countUserLoc))
 
 			#print "Dropout von User-Angaben: " + str(dropout)
-			print "------------------ hsdGeocoder.py FINISHED ------------------"
+			print "--- json2cities FINISHED ---"
 
 			ifile.close()
 			ofileNoMatch.close()
@@ -119,3 +120,39 @@ class hsdGeocoder:
 
 		else: 
 			print("Input must be a string!")
+
+	@staticmethod
+	def cities2coords(input):
+
+		ifile = open("txt/" + input + "_matchedCities.txt", "r")
+		csvReaderMatches = csv.reader(ifile, delimiter='\n')
+
+		ifile2 = open("db/DE.tab", "r")
+		csvReaderDB = csv.reader(ifile2, delimiter='\t')
+
+		ofile = open(input + "_coords.txt", "wb")
+		writerCoords = csv.writer(ofile, delimiter=' ', quotechar='"', quoting= csv.QUOTE_MINIMAL)
+
+		cityList = []
+		fdList = []
+
+		for row in csvReaderMatches:
+			cityList.append(row[0])
+
+		citiesFD = FreqDist(cityList)
+
+		for i in citiesFD.most_common():
+			fdList.append([i[0], i[1]])
+
+		for item in fdList:
+			for row in csvReaderDB:
+				if (str(item[0]) == str(row[3]).lower() and row[4] not in "" and row[5] not in "" and row[9] not in ""):
+					#print "Liste: " + str(item) + ", Mapping auf: " + str(row[3]).lower() + ", Lat: " + row[4] + ", Lon: " + row[5] + ", Einwohner: " + row[9]
+					weight = float(item[1])
+					#print weight
+					writerCoords.writerow([row[4] + "," + row[5] + "," + str("%.1f" % weight)])
+					#writerCount.writerow([str(item[0]) + "," + str(item[1])])
+
+			ifile2.seek(0)
+
+		print "--- cities2coords FINISHED ---"
