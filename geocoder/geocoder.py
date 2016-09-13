@@ -26,10 +26,12 @@ class hsdGeocoder:
 
 			with open("../visualization/json/" + input + ".json", 'r') as f:
 				countCoords = 0
+				countMatchesCoords = 0
 				countPlaces = 0
+				countMatchesPlaces = 0
 				countUserLoc = 0
 				countUserLocNotEmpty = 0
-				countMatches = 0
+				countMatchesUserLoc = 0
 				for line in f:
 					tweet = json.loads(line)
 					if (tweet['coordinates'] is not None):
@@ -56,7 +58,7 @@ class hsdGeocoder:
 										endSearch1 = True
 										#print "---FOUND MATCH--- : " + cityName
 										writerMatchedCities.writerow([cityName])
-										countMatches += 1
+										countMatchesCoords += 1
 						if endSearch1 == False:
 							writerNoMatch.writerow([userPlace])
 
@@ -67,7 +69,7 @@ class hsdGeocoder:
 						countPlaces += 1
 						endS = False
 						tweetPlace = tweet['place']['full_name'].encode('utf-8').lower()
-						#print tweetPlace
+						print tweetPlace
 						tweetPlaceSplitC = tweetPlace.split(',')
 						#print tweetPlaceSplitC
 						for row in csvReader:
@@ -77,6 +79,7 @@ class hsdGeocoder:
 									endS = True
 									#print "FOUND MATCH: " + cityName
 									writerMatchedCities.writerow([cityName])
+									countMatchesPlaces += 1
 						if endS == False:
 							writerNoMatch.writerow([tweetPlace])
 						ifile.seek(0)
@@ -100,16 +103,22 @@ class hsdGeocoder:
 										endSearch = True
 										#print "---FOUND MATCH--- : " + cityName
 										writerMatchedCities.writerow([cityName])
-										countMatches += 1
+										countMatchesUserLoc += 1
 						if endSearch == False:
 							writerNoMatch.writerow([userPlace])
 
 					ifile.seek(0)
 
-			#print "Anzahl Tweets mit User-Location Angabe: " + str(countUserLoc)
-			#print "Anzahl erfolgreicher Zuordnungen zu Staedten: " + str(countMatches)
+			print "Tweets mit Angabe der Koordinaten: " + str(countCoords)
+			print "Erfolgreiche Zuordnungen zu Staedten: " + str(countMatchesCoords)
+			print "-----"
+			print "Tweets mit Angabe des Tweet-Places: " + str(countPlaces)
+			print "Erfolgreiche Zuordnungen zu Staedten: " + str(countMatchesPlaces)
+			print "-----"
+			print "Tweets mit Angabe der User-Location: " + str(countUserLoc)
+			print "Erfolgreiche Zuordnungen zu Staedten: " + str(countMatchesUserLoc)
 
-			#dropout = float(1) - (float(countMatches)/float(countUserLoc))
+			#dropout = float(1) - (float(countMatchesUserLoc)/float(countUserLoc))
 
 			#print "Dropout von User-Angaben: " + str(dropout)
 			print "--- json2cities FINISHED ---"

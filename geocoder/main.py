@@ -4,7 +4,7 @@ from geocoder import hsdGeocoder
 
 geo = hsdGeocoder()
 
-#geo.json2cities("homophobie")
+geo.json2cities("homophobie")
 #geo.cities2coords("homophobie")
 #geo.pop_normalizer("homophobie")
 #geo.tweet_normalizer("homophobie")
