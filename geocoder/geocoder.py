@@ -69,7 +69,7 @@ class hsdGeocoder:
 						countPlaces += 1
 						endS = False
 						tweetPlace = tweet['place']['full_name'].encode('utf-8').lower()
-						print tweetPlace
+						#print tweetPlace
 						tweetPlaceSplitC = tweetPlace.split(',')
 						#print tweetPlaceSplitC
 						for row in csvReader:
