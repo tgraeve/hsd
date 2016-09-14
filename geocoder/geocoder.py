@@ -13,8 +13,17 @@ class hsdGeocoder:
 
 	@staticmethod
 	def json2cities(input):
+		"""
+		Diese Methode ließt eine json-Datei ein, welche pro Zeile einen Tweet als json-Objekt enthalten muss.
+		Die Ausgabe ist eine Liste von Städten (als Textdatei), zu welchen die einzelnen Tweets geographisch zugeordnet werden konnten. 
+		Alle Orts-Angaben aus Tweets, die keiner Stadt zugeordnet werden konnten, werden zur weiteren Überprüfung in eine seperate 
+		Textdatei geschrieben. Aktuell können nur deutsche Schreibweisen der Städte erkannt werden.
+		"""
+
 		if(type(input)==str):
 
+			# Öffnen der input- und outputfiles
+			# Die Datei staedte.csv enthält eine Liste aller deutschen Städte und dient als Datenbank für die folgenden Geocoding-Aufgaben.
 			ifile = open('db/staedte.csv', "r")
 			csvReader = csv.reader(ifile, delimiter='\n')
 
@@ -24,7 +33,9 @@ class hsdGeocoder:
 			ofileCities = open(input + "_matchedCities.txt", "wb")
 			writerMatchedCities = csv.writer(ofileCities, delimiter = ' ', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
 
+			# Öffnen der json-Datei, welche pro Zeile einen Tweet enthält.
 			with open("../visualization/json/" + input + ".json", 'r') as f:
+				# Counter für abschließende Textausgaben
 				countCoords = 0
 				countMatchesCoords = 0
 				countPlaces = 0
@@ -34,12 +45,13 @@ class hsdGeocoder:
 				countMatchesUserLoc = 0
 				for line in f:
 					tweet = json.loads(line)
+					# Durchsuchen der Spalte tweet['coordinates'].
+					# Falls Koordinaten vorhanden sind, werden diese mithilfe des externen Werkzeugs "Nominatim" einer Stadt zugeordnet.
 					if (tweet['coordinates'] is not None):
 						countCoords += 1
-						endSearch1 = False
+						endSearch = False
 						coords = str(tweet['coordinates'])[37:-2].split(',')
 						coordsString = coords[1][1:] + ", " + coords[0]
-						#print coordsString
 						geolocator = Nominatim()
 						location = geolocator.reverse(coordsString)
 						if (location.address is not None):
@@ -49,41 +61,44 @@ class hsdGeocoder:
 							for i in locSplit:
 								locSplit[counter] = i.strip(' \t\n\r')
 								counter += 1
-							#print locSplit
 							for row in csvReader:
-								if (endSearch1 == False):
+								if (endSearch == False):
 									cityName = str(row[0]).lower()
-									#print cityName
 									if (cityName in locSplit):
-										endSearch1 = True
-										#print "---FOUND MATCH--- : " + cityName
+										endSearch = True
 										writerMatchedCities.writerow([cityName])
 										countMatchesCoords += 1
-						if endSearch1 == False:
-							writerNoMatch.writerow([userPlace])
+										break
+						# Falls Zuordnung fehlschlägt, werden Koordinaten in _noMatchFound.txt geschrieben.
+						if endSearch == False:
+							writerNoMatch.writerow([coordsString])
 
 						ifile.seek(0)
+						#Timer um externen Service "Nominatim" nicht zu überlasten.
 						time.sleep(1)
 
+					# Durchsuchen der Spalte tweet['place']
+					# Falls Tweetplace angegeben ist, wird versucht, diesen mithilfe der staedte.csv einer Stadt zuzuordnen.
 					elif (tweet['place'] is not None):
 						countPlaces += 1
-						endS = False
+						endSearch = False
 						tweetPlace = tweet['place']['full_name'].encode('utf-8').lower()
-						#print tweetPlace
 						tweetPlaceSplitC = tweetPlace.split(',')
-						#print tweetPlaceSplitC
 						for row in csvReader:
-							if (endS == False):
+							if (endSearch == False):
 								cityName = str(row[0]).lower()
 								if (cityName in tweetPlaceSplitC):
-									endS = True
-									#print "FOUND MATCH: " + cityName
+									endSearch = True
 									writerMatchedCities.writerow([cityName])
 									countMatchesPlaces += 1
-						if endS == False:
+									break
+						# Falls Zuordnung fehlschlägt, wird der Tweet-Place in _noMatchFound.txt geschrieben.
+						if endSearch == False:
 							writerNoMatch.writerow([tweetPlace])
+
 						ifile.seek(0)
 
+					# Durchsuchen der Spalte tweet['user']['location'] (Freitext-Angabe von Usern)
 					elif (tweet['user']['location'] is not None):
 						countUserLoc += 1
 						endSearch = False
@@ -91,24 +106,24 @@ class hsdGeocoder:
 						userPlaceStrip = userPlace.strip(' \t\n\r')
 						if (userPlaceStrip != ""):
 							countUserLocNotEmpty += 1
-							#print userPlace
 							userPlaceSplitC = userPlace.split(',')
 							userPlaceSplitS = userPlace.split(' ')
 							userPlaceSplitM = userPlace.split('-')
 							for row in csvReader:
 								if (endSearch == False):
 									cityName = str(row[0]).lower()
-									#print cityName
 									if (cityName in userPlaceSplitC or cityName in userPlaceSplitS or cityName in userPlaceSplitM):
 										endSearch = True
-										#print "---FOUND MATCH--- : " + cityName
 										writerMatchedCities.writerow([cityName])
 										countMatchesUserLoc += 1
+										break
+						# Falls Zuordnung fehlschlägt, wird die User-Location in _noMatchFound.txt geschrieben.
 						if endSearch == False:
 							writerNoMatch.writerow([userPlace])
 
 					ifile.seek(0)
 
+			# Ausgaben für weitere Überprüfungen
 			print "Tweets mit Angabe der Koordinaten: " + str(countCoords)
 			print "Erfolgreiche Zuordnungen zu Staedten: " + str(countMatchesCoords)
 			print "-----"
@@ -118,9 +133,6 @@ class hsdGeocoder:
 			print "Tweets mit Angabe der User-Location: " + str(countUserLoc)
 			print "Erfolgreiche Zuordnungen zu Staedten: " + str(countMatchesUserLoc)
 
-			#dropout = float(1) - (float(countMatchesUserLoc)/float(countUserLoc))
-
-			#print "Dropout von User-Angaben: " + str(dropout)
 			print "--- json2cities FINISHED ---"
 
 			ifile.close()

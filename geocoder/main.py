@@ -4,9 +4,9 @@ from geocoder import hsdGeocoder
 
 geo = hsdGeocoder()
 
-#geo.json2cities("fluechtlinge")
+geo.json2cities("homophobie")
 #geo.cities2coords("fluechtlinge")
 #geo.pop_normalizer("fluechtlinge")
-geo.tweet_normalizer("fluechtlinge")
+#geo.tweet_normalizer("fluechtlinge")
 
 print "--- main.py FINISHED ---"
