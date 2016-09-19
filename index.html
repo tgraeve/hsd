@@ -20,11 +20,11 @@
     <input class="cross" type="image" src="visualization/style/kreuz.png" name="close" />
   
     <div id="inhalt"><u>Inhalt:</u><br>
-      <div id="layername">Flüchtlinge</div>
+      <div id="layername">Twitteraktivität</div>
     </div>
 
     <div id="titel">deutschlandhasst<br>
-      <div id="untertitel">Hasserfüllte Tweets in Deutschland</div>
+      <div id="untertitel">Hasserfuellte Tweets in Deutschland</div>
     </div>
 
     <div id="erklaerung">
@@ -47,7 +47,49 @@
    </div>
 
    <div id="over_map">
-      TEST!!!!!!!
+      Normalisierung: <br>
+        <input type="radio" id="nKeine" name="norm" checked="checked" value="keine" class="radio">
+          <label for="nKeine">keine (reine Anzahl)</label><br>
+        <input type="radio" id="nEinwohner" name="norm" value="einwohner" class="radio">
+          <label for="nEinwohner">über Einwohner</label><br>
+        <input type="radio" id="nTwitter" name="norm" value="twitter" class="radio">
+          <label id="nTwitter_label" for="nTwitter">über Twitteraktivität</label>
+
+      <div id="titel_schlagwoerter" class="schlagwoerter">
+        Schlagwörter:
+        <div id="swFluechtlinge" class="schlagwoerter">
+          <input type="radio" id="flAll" name="swFluechtlinge" value="flAll" checked="checked" class="radio">
+            <label for="all">alle</label><br>
+          <input type="radio" id="rapefugees" name="swFluechtlinge" class="radio">
+            <label for="rapefugees">rapefugees</label><br>
+          <input type="radio" id="krimigranten" name="swFluechtlinge" class="radio">
+            <label for="krimigranten">krimigranten</label><br>
+          <input type="radio" id="stopislam" name="swFluechtlinge" class="radio">
+            <label for="stopislam">stopislam</label><br>
+          <input type="radio" id="deport" name="swFluechtlinge" class="radio">
+            <label for="deport">deport</label><br>
+          <input type="radio" id="migrantcrisis" name="swFluechtlinge" class="radio">
+            <label for="migrantcrisis">migrantcrisis</label><br>
+          <input type="radio" id="refugeecrisis" name="swFluechtlinge" class="radio">
+            <label for="refugeecrisis">refugeecrisis</label><br>
+          <input type="radio" id="refujihadis" name="swFluechtlinge" class="radio">
+            <label for="refujihadis">refujihadis</label><br>
+          <input type="radio" id="immivasion" name="swFluechtlinge" class="radio">
+            <label for="immivasion">immivasion</label><br>
+          <input type="radio" id="merkills" name="swFluechtlinge" class="radio">
+            <label for="merkills">merkills</label><br>
+          <input type="radio" id="germanozid" name="swFluechtlinge" class="radio">
+            <label for="germanozid">germanozid</label>
+        </div>
+        <div id="swBehinderung" class="schlagwoerter">
+          <input type="radio" id="krüppel" name="swBehinderung" value="krüppel" class="radio">
+            <label for="krüppel">krüppel</label>
+        </div>
+        <div id="swHomophobie" class="schlagwoerter">
+          <input type="radio" id="schwuchtel" name="swHomophobie" value="schwuchtel" class="radio">
+            <label for="schwuchtel">schwuchtel</label>
+        </div>
+      </div>
    </div>
 </div>
 
@@ -58,6 +100,7 @@
       /* Hier der jQuery-Code */
       $( ".cross" ).hide();
       $( ".menu" ).hide();
+      $(".schlagwoerter").hide();
 
       $( ".hamburger" ).click(
         function() {
@@ -83,29 +126,94 @@
           });
       });
 
-      $("#bAll").click(LoadAll);
+      var actLayer = "Twitteraktivität";
+
+      $("#bAll").click(loadAll);
       $("#bAll").click(function() {
           $("#layername").html("Twitteraktivität");
+          $("#titel_schlagwoerter").hide();
+          $(".schlagwoerter").hide();
+          actLayer = "Twitteraktivität";
       });
         
 
-      $("#bFluecht").click(LoadFluechtlinge);
+      $("#bFluecht").click(loadFluechtlinge);
       $("#bFluecht").click(
         function() {
           $("#layername").html("Flüchtlinge");
+          $("#over_map").show();
+          $("#flAll").attr("checked", "checked");
+          $(".schlagwoerter").hide();
+          $("#titel_schlagwoerter").show();
+          $("#swFluechtlinge").show();
+          actLayer = "Flüchtlinge"
         });
 
-
-      $("#bHomo").click(LoadHomoph);
+      $("#bHomo").click(loadHomophobie);
       $("#bHomo").click(
         function() {
           $("#layername").html("Homophobie");
+          $("#over_map").show();
+          $("#schwuchtel").attr("checked", "checked");
+          $(".schlagwoerter").hide();
+          $("#titel_schlagwoerter").show();
+          $("#swHomophobie").show();
+          actLayer = "Homophobie";
       });
 
       $("#bBeh").click(
         function() {
           $("#layername").html("Behinderung");
           alert("Bisher noch keine Daten hinterlegt!")
+          $("#over_map").show();
+          $("#krüppel").attr("checked", "checked");
+          $(".schlagwoerter").hide();
+          $("#titel_schlagwoerter").show();
+          $("#swBehinderung").show();
+          actLayer = "Behinderung";
+      });
+
+      $(".radio").click(
+        function(){
+          if (actLayer == "Twitteraktivität") {
+              switch ($("input[name='norm']:checked").val()) {
+                case "keine":
+                  loadAll();
+                  break;
+                case "einwohner":
+                  loadAllPN();
+              }
+          }
+          else if (actLayer == "Flüchtlinge") {
+            switch ($("input[name='swFluechtlinge']:checked").val()) {
+              case "flAll":
+                switch ($("input[name='norm']:checked").val()) {
+                  case "keine":
+                    loadFluechtlinge();
+                    break;
+                  case "einwohner":
+                    loadFluechtlingePN();
+                    break;
+                  case "twitter":
+                    loadFluechtlingeTN();
+                }
+            }
+          }
+          else if (actLayer == "Homophobie") {
+            switch ($("input[name='swHomophobie']:checked").val()) {
+              case "schwuchtel":
+                switch ($("input[name='norm']:checked").val()) {
+                  case "keine":
+                    loadHomophobie();
+                    break;
+                  case "einwohner":
+                    loadHomophobiePN();
+                    break;
+                  case "twitter":
+                    loadHomophobieTN();
+                }
+            }
+          }
       });
     });
 
@@ -189,7 +297,7 @@
     var latLonArray;
     var arrLength;
 
-    function LoadFluechtlinge() {
+    function loadFluechtlinge() {
       var oFrame = document.getElementById("fluechtCoords");
       var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
       while (strRawContents.indexOf("\r") >= 0)
@@ -215,8 +323,8 @@
       initLayer();
     }
 
-    function LoadFluechtlingeN() {
-      var oFrame = document.getElementById("fluechtCoordsN");
+    function loadFluechtlingePN() {
+      var oFrame = document.getElementById("fluechtCoordsPN");
             var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
       while (strRawContents.indexOf("\r") >= 0)
           strRawContents = strRawContents.replace("\r", "");
@@ -241,7 +349,33 @@
       initLayer();
     }
 
-    function LoadAll() {
+    function loadFluechtlingeTN() {
+      var oFrame = document.getElementById("fluechtCoordsTN");
+            var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
+
+    function loadAll() {
       var oFrame = document.getElementById("allCoords");
             var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
       while (strRawContents.indexOf("\r") >= 0)
@@ -267,8 +401,8 @@
       initLayer();
     }
 
-    function LoadAllN() {
-      var oFrame = document.getElementById("allCoordsN");
+    function loadAllPN() {
+      var oFrame = document.getElementById("allCoordsPN");
             var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
       while (strRawContents.indexOf("\r") >= 0)
           strRawContents = strRawContents.replace("\r", "");
@@ -293,7 +427,7 @@
       initLayer();
     }
 
-    function LoadHomoph() {
+    function loadHomophobie() {
       var oFrame = document.getElementById("homophCoords");
       var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
       while (strRawContents.indexOf("\r") >= 0)
@@ -319,8 +453,34 @@
       initLayer();
     }
 
-    function LoadHomophN() {
-      var oFrame = document.getElementById("homophCoordsN");
+    function loadHomophobiePN() {
+      var oFrame = document.getElementById("homophCoordsPN");
+      var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
+
+    function loadHomophobieTN() {
+      var oFrame = document.getElementById("homophCoordsTN");
       var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
       while (strRawContents.indexOf("\r") >= 0)
           strRawContents = strRawContents.replace("\r", "");
@@ -384,12 +544,14 @@
 
   </script>
 
-  <iframe id="fluechtCoords" src="visualization/txt/fluecht_Coords.txt" onload="LoadAll();" style="display: none;"></iframe>
-  <iframe id="fluechtCoordsN" src="visualization/txt/fluecht_nCoords.txt" style="display: none;"></iframe>
-  <iframe id="allCoords" src="visualization/txt/all_Coords.txt" style="display: none;"></iframe>
-  <iframe id="allCoordsN" src="visualization/txt/all_nCoords.txt" style="display: none;"></iframe>
-  <iframe id="homophCoords" src="visualization/txt/homoph_Coords.txt" style="display: none;"></iframe>
-  <iframe id="homophCoordsN" src="visualization/txt/homoph_nCoords.txt" style="display: none;"></iframe>
+  <iframe id="fluechtCoords" src="visualization/txt/fluechtlinge_coords.txt" onload="loadFluechtlinge();" style="display: none;"></iframe>
+  <iframe id="fluechtCoordsPN" src="visualization/txt/fluechtlinge_coords_pn.txt" style="display: none;"></iframe>
+  <iframe id="fluechtCoordsTN" src="visualization/txt/fluechtlinge_coords_tn.txt" style="display: none;"></iframe>
+  <iframe id="allCoords" src="visualization/txt/all_coords.txt" style="display: none;"></iframe>
+  <iframe id="allCoordsPN" src="visualization/txt/all_coords_pn.txt" style="display: none;"></iframe>
+  <iframe id="homophCoords" src="visualization/txt/homophobie_coords.txt" style="display: none;"></iframe>
+  <iframe id="homophCoordsPN" src="visualization/txt/homophobie_coords_pn.txt" style="display: none;"></iframe>
+  <iframe id="homophCoordsTN" src="visualization/txt/homophobie_coords_tn.txt" style="display: none;"></iframe>
 
 </body>
 </html>

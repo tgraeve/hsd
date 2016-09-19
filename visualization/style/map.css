@@ -1,4 +1,6 @@
 @font-face { font-family: grobeDeutschmeister; src: url(GrobeDeutschmeister.ttf); }
+@font-face { font-family: UrbanJungle; src: url(UrbanJungle.otf); }
+@font-face { font-family: Caecilia; src: url(CaeciliaLTStd-Bold.otf); }
 
 html, body {
   width: 100vw;
@@ -13,10 +15,6 @@ body {
   flex-direction: column;
 }
 
-header, .menu{
-  font-family: grobeDeutschmeister;
-}
-
 header {
   display: flex;
   align-items: center;
@@ -25,9 +23,20 @@ header {
   flex: 5%;
   padding: 0.2em;
   background-color: #1E2426;
-  font-family: grobeDeutschmeister;
-  font-size: 40px;
+  font-size: 41px;
   color: red;
+}
+
+#inhalt, #layername, #erklaerung, .menu{
+  font-family: Caecilia;
+}
+
+#titel, #untertitel {
+  font-family: UrbanJungle;
+}
+
+#untertitel {
+  font-size: 21px;
 }
 
 header div {
@@ -44,7 +53,7 @@ header div {
   font-size: 30px;
 }
 
-#inhalt, #untertitel, #erklaerung {
+#inhalt, #erklaerung {
   font-size: 20px;
 }
 
@@ -78,8 +87,11 @@ header div {
 
 #over_map {
   position: absolute;
-  top: 20%;
-  left: 1%;
+  height: 25em;
+  width: 20em;
+  background-color: white;
+  top: 15%;
+  left: 0.8%;
   z-index: 99;
 
 }
@@ -90,48 +102,6 @@ header div {
   position: relative;
 
 }
-
-#floating-panel {
-  position: absolute;
-  display: inline-block;
-  background-color: #333;
-  padding: 5px;
-  border: 1px solid #999;
-  text-align: center;
-  font-family: 'Roboto','sans-serif';
-  height: 30px;
-  width: 60px;
-  top: 10px;
-  padding-left: 10px;
-}
-
-/*
-#map {
-  flex: 100%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  }*/
-
-/*button {
-  background-color: #111;
-  color: white;
-}*/
-
-/*#wordFD {
-  color:white;
-  opacity: 0.9;
-  display: none;
-  background-color: white;
-        border: 1px solid #999;
-        left: 0.5%;
-        padding: 5px;
-        position: absolute;
-        top: 120px;
-        z-index: 6;
-}*/
 
 /*Burger Menu Test*/
 
