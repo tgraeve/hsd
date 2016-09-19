@@ -22,7 +22,7 @@ class hsdGeocoder:
 
 		if(type(input)==str):
 
-			# Öffnen der input- und outputfiles
+			# Öffnen der input- und outputstreams
 			# Die Datei staedte.csv enthält eine Liste aller deutschen Städte und dient als Datenbank für die folgenden Geocoding-Aufgaben.
 			ifile = open('db/staedte.csv', "r")
 			csvReader = csv.reader(ifile, delimiter='\n')
@@ -35,6 +35,7 @@ class hsdGeocoder:
 
 			# Öffnen der json-Datei, welche pro Zeile einen Tweet enthält.
 			with open("../visualization/json/" + input + ".json", 'r') as f:
+
 				# Counter für abschließende Textausgaben
 				countCoords = 0
 				countMatchesCoords = 0
@@ -45,83 +46,84 @@ class hsdGeocoder:
 				countMatchesUserLoc = 0
 				for line in f:
 					tweet = json.loads(line)
-					# Durchsuchen der Spalte tweet['coordinates'].
-					# Falls Koordinaten vorhanden sind, werden diese mithilfe des externen Werkzeugs "Nominatim" einer Stadt zugeordnet.
-					if (tweet['coordinates'] is not None):
-						countCoords += 1
-						endSearch = False
-						coords = str(tweet['coordinates'])[37:-2].split(',')
-						coordsString = coords[1][1:] + ", " + coords[0]
-						geolocator = Nominatim()
-						location = geolocator.reverse(coordsString)
-						if (location.address is not None):
-							locAddress = str(location.raw['display_name'].encode('utf-8').lower())
-							locSplit = locAddress.split(',')
-							counter = 0
-							for i in locSplit:
-								locSplit[counter] = i.strip(' \t\n\r')
-								counter += 1
+					if ("rapefugees" in tweet['text'].encode('utf-8')):
+						# Durchsuchen der Spalte tweet['coordinates'].
+						# Falls Koordinaten vorhanden sind, werden diese mithilfe des externen Werkzeugs "Nominatim" einer Stadt zugeordnet.
+						if (tweet['coordinates'] is not None):
+							countCoords += 1
+							endSearch = False
+							coords = str(tweet['coordinates'])[37:-2].split(',')
+							coordsString = coords[1][1:] + ", " + coords[0]
+							geolocator = Nominatim()
+							location = geolocator.reverse(coordsString)
+							if (location.address is not None):
+								locAddress = str(location.raw['display_name'].encode('utf-8').lower())
+								locSplit = locAddress.split(',')
+								counter = 0
+								for i in locSplit:
+									locSplit[counter] = i.strip(' \t\n\r')
+									counter += 1
+								for row in csvReader:
+									if (endSearch == False):
+										cityName = str(row[0]).lower()
+										if (cityName in locSplit):
+											endSearch = True
+											writerMatchedCities.writerow([cityName])
+											countMatchesCoords += 1
+											break
+							# Falls Zuordnung fehlschlägt, werden Koordinaten in _noMatchFound.txt geschrieben.
+							if endSearch == False:
+								writerNoMatch.writerow([coordsString])
+
+							ifile.seek(0)
+							#Timer um externen Service "Nominatim" nicht zu überlasten.
+							time.sleep(1)
+
+						# Durchsuchen der Spalte tweet['place']
+						# Falls Tweetplace angegeben ist, wird versucht, diesen mithilfe der staedte.csv einer Stadt zuzuordnen.
+						elif (tweet['place'] is not None):
+							countPlaces += 1
+							endSearch = False
+							tweetPlace = tweet['place']['full_name'].encode('utf-8').lower()
+							tweetPlaceSplitC = tweetPlace.split(',')
 							for row in csvReader:
 								if (endSearch == False):
 									cityName = str(row[0]).lower()
-									if (cityName in locSplit):
+									if (cityName in tweetPlaceSplitC):
 										endSearch = True
 										writerMatchedCities.writerow([cityName])
-										countMatchesCoords += 1
+										countMatchesPlaces += 1
 										break
-						# Falls Zuordnung fehlschlägt, werden Koordinaten in _noMatchFound.txt geschrieben.
-						if endSearch == False:
-							writerNoMatch.writerow([coordsString])
+							# Falls Zuordnung fehlschlägt, wird der Tweet-Place in _noMatchFound.txt geschrieben.
+							if endSearch == False:
+								writerNoMatch.writerow([tweetPlace])
+
+							ifile.seek(0)
+
+						# Durchsuchen der Spalte tweet['user']['location'] (Freitext-Angabe von Usern)
+						elif (tweet['user']['location'] is not None):
+							countUserLoc += 1
+							endSearch = False
+							userPlace = tweet['user']['location'].encode('utf-8').lower()
+							userPlaceStrip = userPlace.strip(' \t\n\r')
+							if (userPlaceStrip != ""):
+								countUserLocNotEmpty += 1
+								userPlaceSplitC = userPlace.split(',')
+								userPlaceSplitS = userPlace.split(' ')
+								userPlaceSplitM = userPlace.split('-')
+								for row in csvReader:
+									if (endSearch == False):
+										cityName = str(row[0]).lower()
+										if (cityName in userPlaceSplitC or cityName in userPlaceSplitS or cityName in userPlaceSplitM):
+											endSearch = True
+											writerMatchedCities.writerow([cityName])
+											countMatchesUserLoc += 1
+											break
+							# Falls Zuordnung fehlschlägt, wird die User-Location in _noMatchFound.txt geschrieben.
+							if endSearch == False:
+								writerNoMatch.writerow([userPlace])
 
 						ifile.seek(0)
-						#Timer um externen Service "Nominatim" nicht zu überlasten.
-						time.sleep(1)
-
-					# Durchsuchen der Spalte tweet['place']
-					# Falls Tweetplace angegeben ist, wird versucht, diesen mithilfe der staedte.csv einer Stadt zuzuordnen.
-					elif (tweet['place'] is not None):
-						countPlaces += 1
-						endSearch = False
-						tweetPlace = tweet['place']['full_name'].encode('utf-8').lower()
-						tweetPlaceSplitC = tweetPlace.split(',')
-						for row in csvReader:
-							if (endSearch == False):
-								cityName = str(row[0]).lower()
-								if (cityName in tweetPlaceSplitC):
-									endSearch = True
-									writerMatchedCities.writerow([cityName])
-									countMatchesPlaces += 1
-									break
-						# Falls Zuordnung fehlschlägt, wird der Tweet-Place in _noMatchFound.txt geschrieben.
-						if endSearch == False:
-							writerNoMatch.writerow([tweetPlace])
-
-						ifile.seek(0)
-
-					# Durchsuchen der Spalte tweet['user']['location'] (Freitext-Angabe von Usern)
-					elif (tweet['user']['location'] is not None):
-						countUserLoc += 1
-						endSearch = False
-						userPlace = tweet['user']['location'].encode('utf-8').lower()
-						userPlaceStrip = userPlace.strip(' \t\n\r')
-						if (userPlaceStrip != ""):
-							countUserLocNotEmpty += 1
-							userPlaceSplitC = userPlace.split(',')
-							userPlaceSplitS = userPlace.split(' ')
-							userPlaceSplitM = userPlace.split('-')
-							for row in csvReader:
-								if (endSearch == False):
-									cityName = str(row[0]).lower()
-									if (cityName in userPlaceSplitC or cityName in userPlaceSplitS or cityName in userPlaceSplitM):
-										endSearch = True
-										writerMatchedCities.writerow([cityName])
-										countMatchesUserLoc += 1
-										break
-						# Falls Zuordnung fehlschlägt, wird die User-Location in _noMatchFound.txt geschrieben.
-						if endSearch == False:
-							writerNoMatch.writerow([userPlace])
-
-					ifile.seek(0)
 
 			# Ausgaben für weitere Überprüfungen
 			print "Tweets mit Angabe der Koordinaten: " + str(countCoords)
@@ -135,6 +137,7 @@ class hsdGeocoder:
 
 			print "--- json2cities FINISHED ---"
 
+			# Streams schließen
 			ifile.close()
 			ofileNoMatch.close()
 			ofileCities.close()
@@ -144,7 +147,16 @@ class hsdGeocoder:
 
 	@staticmethod
 	def cities2coords(input):
+		"""
+		Die Eingabe dieser Methode ist eine Liste von Städten (als Textdatei), zu welchen die einzelnen Tweets
+		in der json2cities-Methode geographisch zugeordnet werden konnten. 
+		Die Ausgabe ist eine Textdatei, welche als Input für den Heatmap-Layer der Visualisierung dient.
+		Diese Textdatei enthält die Koordinaten der zugeordneten Städte, sowie ein Gewicht für die Visualisierung. 
+		Das Gewicht wird in dieser Methode durch die reine Anzahl der Vorkommen der Städte (in _matchedCities.txt) bestimmt. 
+		"""
 
+		# Öffnen der input- und outputstreams
+		# Die Datei DE_cleanedUp.tab dient als Datenbank (enthält Koordinaten aller Städte).
 		ifile = open("txt/" + input + "_matchedCities.txt", "r")
 		csvReaderMatches = csv.reader(ifile, delimiter='\n')
 
@@ -154,6 +166,7 @@ class hsdGeocoder:
 		ofile = open(input + "_coords.txt", "wb")
 		writerCoords = csv.writer(ofile, delimiter=' ', quotechar='"', quoting= csv.QUOTE_MINIMAL)
 
+		# Erstellen einer Frequency-Distribution, um die Anzahl der Vorkommen als Gewicht übergeben zu können.
 		cityList = []
 		fdList = []
 
@@ -165,6 +178,7 @@ class hsdGeocoder:
 		for i in citiesFD.most_common():
 			fdList.append([i[0], i[1]])
 
+		# In dieser Schleife werden für alle Städte die entsprechenden Koordinaten aus der Datenbank gelesen und mit Gewicht in die Output-Datei geschrieben.
 		for item in fdList:
 			for row in csvReaderDB:
 				if (str(item[0]) == str(row[0])):
@@ -177,6 +191,16 @@ class hsdGeocoder:
 
 	@staticmethod
 	def pop_normalizer(input):
+		"""
+		Die Eingabe dieser Methode ist eine Liste von Städten (als Textdatei), zu welchen die einzelnen Tweets
+		in der json2cities-Methode geographisch zugeordnet werden konnten. 
+		Die Ausgabe ist eine Textdatei, welche als Input für den Heatmap-Layer der Visualisierung dient.
+		Diese Textdatei enthält die Koordinaten der zugeordneten Städte, sowie ein Gewicht für die Visualisierung. 
+		Das Gewicht wird in dieser Methode durch die Einwohnerzahl der entsprechenden Städte normalisiert. 
+		"""
+
+		# Öffnen der input- und outputstreams
+		# Die Datei DE_cleanedUp.tab dient als Datenbank (enthält Koordinaten und Einwohnerzahlen aller Städte).
 		ifile = open("txt/" + input + "_matchedCities.txt", "r")
 		csvReaderMatches = csv.reader(ifile, delimiter='\n')
 
@@ -186,6 +210,7 @@ class hsdGeocoder:
 		ofile = open(input + "_coords_pn.txt", "wb")
 		writerCoords = csv.writer(ofile, delimiter=' ', quotechar='"', quoting= csv.QUOTE_MINIMAL)
 
+		# Erstellen einer Frequency-Distribution, um die Anzahl der Vorkommen durch die Einwohnerzahlen normalisieren zu können.
 		matchedCitiesList = []
 		fdList = []
 
@@ -197,11 +222,12 @@ class hsdGeocoder:
 		for i in citiesFD.most_common():
 			fdList.append([i[0], i[1]])
 
+		# In dieser Schleife werden für alle Städte die entsprechenden Koordinaten aus der Datenbank gelesen und mit Gewicht in die Output-Datei geschrieben.
+		# Das Gewicht für jede Stadt lässt sich berechnen durch: (Anzahl Tweets / Anzahl Einwohner) * 1.500.000
 		for item in fdList:
 			for row in csvReaderDB:
 				if (str(item[0]) == str(row[0])):
 					weight = (float(item[1])/float(row[3])) * 1500000
-					#print weight
 					writerCoords.writerow([row[1] + "," + row[2] + "," + str("%.1f" % weight)])
 					
 			ifile2.seek(0)
@@ -210,6 +236,17 @@ class hsdGeocoder:
 
 	@staticmethod
 	def tweet_normalizer(input):
+		"""
+		Die Eingabe dieser Methode ist eine Liste von Städten (als Textdatei), zu welchen die einzelnen Tweets
+		in der json2cities-Methode geographisch zugeordnet werden konnten. 
+		Die Ausgabe ist eine Textdatei, welche als Input für den Heatmap-Layer der Visualisierung dient.
+		Diese Textdatei enthält die Koordinaten der zugeordneten Städte, sowie ein Gewicht für die Visualisierung. 
+		Das Gewicht wird in dieser Methode durch eine generelle Tweethäufigkeit der entsprechenden Städte normalisiert. 
+		"""
+		
+		# Öffnen der input- und outputstreams
+		# Die Datei DE_cleanedUp.tab dient als Datenbank (enthält Koordinaten aller Städte).
+		# Außerdem dient die Datei all_matchedCities.txt als Grundlage zur Normalisierung des Gewichts.
 		ifile = open("txt/" + input + "_matchedCities.txt", "r")
 		csvReaderMatches = csv.reader(ifile, delimiter='\n')
 
@@ -222,6 +259,7 @@ class hsdGeocoder:
 		ofile = open(input + "_coords_tn.txt", "wb")
 		writerCoords = csv.writer(ofile, delimiter=' ', quotechar='"', quoting= csv.QUOTE_MINIMAL)
 
+		# Erstellen der Frequency-Distributions, um die Anzahl der Vorkommen durch die generelle Tweet-Häufigkeit der entsprechenden Stadt normalisieren zu können.
 		matchedCitiesList = []
 		fdMatchedCities = []
 		allTweetsList = []
@@ -243,6 +281,8 @@ class hsdGeocoder:
 		for i in allTweetsFD.most_common():
 			fdAllTweets.append([i[0], i[1]])
 
+		# In dieser Schleife werden für alle Städte die entsprechenden Koordinaten aus der Datenbank gelesen und mit Gewicht in die Output-Datei geschrieben.
+		# Das Gewicht für jede Stadt lässt sich berechnen durch: (Anzahl Tweets(zum Thema) / Anzahl Tweets (generell)) * 1.000
 		for i in fdMatchedCities:
 			for row in csvReaderDB:
 				if (str(i[0]) == str(row[0])):
