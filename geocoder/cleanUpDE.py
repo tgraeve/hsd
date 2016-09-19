@@ -2,6 +2,11 @@
 
 import csv
 
+"""
+Diese Datei dienst zum Aufräumen der Datenbank DE.tab. Nur die wirklich benötigten Daten (Koordinaten, Einwohnerzahl und Typ) werden in
+DE_cleanedUp.tab gespeichert. Die neuen Einträge werden nach Einwohnerzahl absteigend sortiert.
+"""
+
 ifile = open('db/DE.tab', "r")
 reader = csv.reader(ifile, delimiter='\t')
 
