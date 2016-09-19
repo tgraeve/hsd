@@ -2,6 +2,7 @@
 
 import time
 import csv
+import math
 import json
 from geopy.geocoders import Nominatim
 from nltk import FreqDist
@@ -227,8 +228,10 @@ class hsdGeocoder:
 		for item in fdList:
 			for row in csvReaderDB:
 				if (str(item[0]) == str(row[0])):
-					weight = (float(item[1])/float(row[3])) * 1500000
-					writerCoords.writerow([row[1] + "," + row[2] + "," + str("%.1f" % weight)])
+					weightTemp = (float(item[1])/float(row[3])) * 1500000
+					#weight = ((weightTemp-5.9)/1817.7)
+					weight = math.sqrt(weightTemp)
+					writerCoords.writerow([row[1] + "," + row[2] + "," + str("%.5f" % weight)])
 					
 			ifile2.seek(0)
 
