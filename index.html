@@ -47,7 +47,7 @@
    </div>
 
    <div id="over_map">
-      Normalisierung: <br>
+      <u>Normalisierung:</u> <br>
         <input type="radio" id="nKeine" name="norm" checked="checked" value="keine" class="radio">
           <label for="nKeine">keine (reine Anzahl)</label><br>
         <input type="radio" id="nEinwohner" name="norm" value="einwohner" class="radio">
@@ -55,11 +55,11 @@
         <input type="radio" id="nTwitter" name="norm" value="twitter" class="radio">
           <label id="nTwitter_label" for="nTwitter">über Twitteraktivität</label>
 
-      <div id="titel_schlagwoerter" class="schlagwoerter">
-        Schlagwörter:
+      <div id="schlagwoerter" class="schlagwoerter">
+        <br><u>Schlagwörter:</u>
         <div id="swFluechtlinge" class="schlagwoerter">
           <input type="radio" id="flAll" name="swFluechtlinge" value="flAll" checked="checked" class="radio">
-            <label for="all">alle</label><br>
+            <label for="flAll">alle</label><br>
           <input type="radio" id="rapefugees" name="swFluechtlinge" class="radio">
             <label for="rapefugees">rapefugees</label><br>
           <input type="radio" id="krimigranten" name="swFluechtlinge" class="radio">
@@ -131,7 +131,7 @@
       $("#bAll").click(loadAll);
       $("#bAll").click(function() {
           $("#layername").html("Twitteraktivität");
-          $("#titel_schlagwoerter").hide();
+          $("#schlagwoerter").hide();
           $(".schlagwoerter").hide();
           actLayer = "Twitteraktivität";
       });
@@ -144,7 +144,7 @@
           $("#over_map").show();
           $("#flAll").attr("checked", "checked");
           $(".schlagwoerter").hide();
-          $("#titel_schlagwoerter").show();
+          $("#schlagwoerter").show();
           $("#swFluechtlinge").show();
           actLayer = "Flüchtlinge"
         });
@@ -156,7 +156,7 @@
           $("#over_map").show();
           $("#schwuchtel").attr("checked", "checked");
           $(".schlagwoerter").hide();
-          $("#titel_schlagwoerter").show();
+          $("#schlagwoerter").show();
           $("#swHomophobie").show();
           actLayer = "Homophobie";
       });
@@ -168,7 +168,7 @@
           $("#over_map").show();
           $("#krüppel").attr("checked", "checked");
           $(".schlagwoerter").hide();
-          $("#titel_schlagwoerter").show();
+          $("#schlagwoerter").show();
           $("#swBehinderung").show();
           actLayer = "Behinderung";
       });
@@ -226,8 +226,9 @@
       data: getPoints(),
       map: map
     });
-    heatmap.set('radius', heatmap.get('radius') ? null : 30);
+    heatmap.set('radius', heatmap.get('radius') ? null : 60);
     heatmap.set('opacity', heatmap.get('opacity') ? null : 0.9);
+
   }
 
   function initialize() {
@@ -235,6 +236,12 @@
     var styleArray = [
       { featureType: 'road',
         elementType: 'geometry',
+        stylers: [
+          { visibility: 'off' }
+        ]
+      },
+      { featureType: 'road',
+        elementType: 'labels',
         stylers: [
           { visibility: 'off' }
         ]
@@ -265,9 +272,10 @@
 
     var mapOptions = {
       zoom: 6,
-      center: {lat: 51.5, lng: 10.0},
-      mapTypeId: google.maps.MapTypeId.HYBRID,
-      styles: styleArray
+      center: {lat: 51.5, lng: 8.0},
+      mapTypeId: google.maps.MapTypeId.TERRAIN,
+      styles: styleArray,
+      mapTypeControl:false
     };
 
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -289,7 +297,7 @@
       data: getPoints(),
       map: map
     });
-    heatmap.set('radius', heatmap.get('radius') ? null : 30);
+    heatmap.set('radius', heatmap.get('radius') ? null : 60);
     heatmap.set('opacity', heatmap.get('opacity') ? null : 0.9);
 
   }
@@ -511,19 +519,19 @@
 
   function changeGradient() {
     var gradient = [
-      'rgba(0, 255, 255, 0)',
+      // 'rgba(0, 255, 255, 0)',
       'rgba(0, 255, 255, 1)',
       'rgba(0, 191, 255, 1)',
       'rgba(0, 127, 255, 1)',
-      'rgba(0, 63, 255, 1)',
+      // 'rgba(0, 63, 255, 1)',
       'rgba(0, 0, 255, 1)',
       'rgba(0, 0, 223, 1)',
-      'rgba(0, 0, 191, 1)',
+      // 'rgba(0, 0, 191, 1)',
       'rgba(0, 0, 159, 1)',
       'rgba(0, 0, 127, 1)',
       'rgba(63, 0, 91, 1)',
       'rgba(127, 0, 63, 1)',
-      'rgba(191, 0, 31, 1)',
+      // 'rgba(191, 0, 31, 1)',
       'rgba(255, 0, 0, 1)'
     ]
     heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
@@ -545,7 +553,7 @@
   </script>
 
   <iframe id="fluechtCoords" src="visualization/txt/fluechtlinge_coords.txt" onload="loadFluechtlinge();" style="display: none;"></iframe>
-  <iframe id="fluechtCoordsPN" src="visualization/txt/fluechtlinge_coords_pn.txt" style="display: none;"></iframe>
+  <iframe id="fluechtCoordsPN" src="visualization/txt/fluechtlinge_coords_pn2.txt" style="display: none;"></iframe>
   <iframe id="fluechtCoordsTN" src="visualization/txt/fluechtlinge_coords_tn.txt" style="display: none;"></iframe>
   <iframe id="allCoords" src="visualization/txt/all_coords.txt" style="display: none;"></iframe>
   <iframe id="allCoordsPN" src="visualization/txt/all_coords_pn.txt" style="display: none;"></iframe>

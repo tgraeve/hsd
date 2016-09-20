@@ -87,19 +87,18 @@ header div {
 
 #over_map {
   position: absolute;
-  height: 25em;
-  width: 20em;
-  background-color: white;
-  top: 15%;
-  left: 0.8%;
+  /*height: 50vh;
+  width: 20vw;*/
+  padding: 1em;
+  border-radius: 20px;
+  border: white 1px solid;
+  font-family: Caecilia;
+  font-size: 22px;
+  color: white;
+  background-color: rgba(30,36,38,0.9);
+  top: 1%;
+  left: 0.5%;
   z-index: 99;
-
-}
-
-#menu-overlay {
-  top: 0;
-  left: 0;
-  position: relative;
 
 }
 
