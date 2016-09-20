@@ -47,7 +47,7 @@ class hsdGeocoder:
 				countMatchesUserLoc = 0
 				for line in f:
 					tweet = json.loads(line)
-					if ("rapefugees" in tweet['text'].encode('utf-8')):
+					if ("germanozid" in tweet['text'].encode('utf-8')):
 						# Durchsuchen der Spalte tweet['coordinates'].
 						# Falls Koordinaten vorhanden sind, werden diese mithilfe des externen Werkzeugs "Nominatim" einer Stadt zugeordnet.
 						if (tweet['coordinates'] is not None):
