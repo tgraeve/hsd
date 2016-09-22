@@ -19,12 +19,12 @@
     <input class="hamburger" type="image" src="visualization/style/burger.png" name="menu" />
     <input class="cross" type="image" src="visualization/style/kreuz.png" name="close" />
   
-    <div id="inhalt"><u>Inhalt:</u><br>
+    <div id="inhalt"><u>Thema:</u><br>
       <div id="layername">Twitteraktivität</div>
     </div>
 
     <div id="titel">deutschlandhasst<br>
-      <div id="untertitel">Hasserfuellte Tweets in Deutschland</div>
+      <div id="untertitel">Hasserfuellte  Tweets  in  Deutschland</div>
     </div>
 
     <div id="erklaerung">
@@ -46,51 +46,61 @@
 
    </div>
 
-   <div id="over_map">
-      <u>Normalisierung:</u> <br>
-        <input type="radio" id="nKeine" name="norm" checked="checked" value="keine" class="radio">
-          <label for="nKeine">keine (reine Anzahl)</label><br>
-        <input type="radio" id="nEinwohner" name="norm" value="einwohner" class="radio">
-          <label for="nEinwohner">über Einwohner</label><br>
-        <input type="radio" id="nTwitter" name="norm" value="twitter" class="radio">
-          <label id="nTwitter_label" for="nTwitter">über Twitteraktivität</label>
+   
 
-      <div id="schlagwoerter" class="schlagwoerter">
-        <br><u>Schlagwörter:</u>
-        <div id="swFluechtlinge" class="schlagwoerter">
-          <input type="radio" id="flAll" name="swFluechtlinge" value="flAll" checked="checked" class="radio">
-            <label for="flAll">alle</label><br>
-          <input type="radio" id="rapefugees" name="swFluechtlinge" class="radio">
-            <label for="rapefugees">rapefugees</label><br>
-          <input type="radio" id="krimigranten" name="swFluechtlinge" class="radio">
-            <label for="krimigranten">krimigranten</label><br>
-          <input type="radio" id="stopislam" name="swFluechtlinge" class="radio">
-            <label for="stopislam">stopislam</label><br>
-          <input type="radio" id="deport" name="swFluechtlinge" class="radio">
-            <label for="deport">deport</label><br>
-          <input type="radio" id="migrantcrisis" name="swFluechtlinge" class="radio">
-            <label for="migrantcrisis">migrantcrisis</label><br>
-          <input type="radio" id="refugeecrisis" name="swFluechtlinge" class="radio">
-            <label for="refugeecrisis">refugeecrisis</label><br>
-          <input type="radio" id="refujihadis" name="swFluechtlinge" class="radio">
-            <label for="refujihadis">refujihadis</label><br>
-          <input type="radio" id="immivasion" name="swFluechtlinge" class="radio">
-            <label for="immivasion">immivasion</label><br>
-          <input type="radio" id="merkills" name="swFluechtlinge" class="radio">
-            <label for="merkills">merkills</label><br>
-          <input type="radio" id="germanozid" name="swFluechtlinge" class="radio">
-            <label for="germanozid">germanozid</label>
-        </div>
-        <div id="swBehinderung" class="schlagwoerter">
-          <input type="radio" id="krüppel" name="swBehinderung" value="krüppel" class="radio">
-            <label for="krüppel">krüppel</label>
-        </div>
-        <div id="swHomophobie" class="schlagwoerter">
-          <input type="radio" id="schwuchtel" name="swHomophobie" value="schwuchtel" class="radio">
-            <label for="schwuchtel">schwuchtel</label>
-        </div>
+   <div id="over_map">
+    <div id="om_tab1">Optionen</div>
+    <div id="om_tab2">Begriffe</div>
+
+    <div class="normalisierung">
+    <u>Normalisierung:</u> <br>
+      <input type="radio" id="nKeine" name="norm" checked="checked" value="keine" class="radio">
+        <label for="nKeine">keine (reine Anzahl)</label><br>
+      <input type="radio" id="nEinwohner" name="norm" value="einwohner" class="radio">
+        <label for="nEinwohner">über Einwohner</label><br>
+      <input type="radio" id="nTwitter" name="norm" value="twitter" class="radio">
+        <label id="nTwitter_label" for="nTwitter">über Twitteraktivität</label>
+    </div>
+
+    <div id="schlagwoerter" class="schlagwoerter">
+      <br><u>Schlagwörter:</u>
+      <div id="swFluechtlinge" class="schlagwoerter">
+        <input type="radio" id="flAll" name="swFluechtlinge" value="flAll" checked="checked" class="radio">
+          <label for="flAll">alle</label><br>
+        <input type="radio" id="rapefugees" name="swFluechtlinge" class="radio">
+          <label for="rapefugees">rapefugees</label><br>
+        <input type="radio" id="krimigranten" name="swFluechtlinge" class="radio">
+          <label for="krimigranten">krimigranten</label><br>
+        <input type="radio" id="stopislam" name="swFluechtlinge" class="radio">
+          <label for="stopislam">stopislam</label><br>
+        <input type="radio" id="deport" name="swFluechtlinge" class="radio">
+          <label for="deport">deport</label><br>
+        <input type="radio" id="migrantcrisis" name="swFluechtlinge" class="radio">
+          <label for="migrantcrisis">migrantcrisis</label><br>
+        <input type="radio" id="refugeecrisis" name="swFluechtlinge" class="radio">
+          <label for="refugeecrisis">refugeecrisis</label><br>
+        <input type="radio" id="refujihadis" name="swFluechtlinge" class="radio">
+          <label for="refujihadis">refujihadis</label><br>
+        <input type="radio" id="immivasion" name="swFluechtlinge" class="radio">
+          <label for="immivasion">immivasion</label><br>
+        <input type="radio" id="merkills" name="swFluechtlinge" class="radio">
+          <label for="merkills">merkills</label><br>
+        <input type="radio" id="germanozid" name="swFluechtlinge" class="radio">
+          <label for="germanozid">germanozid</label>
       </div>
-   </div>
+      <div id="swBehinderung" class="schlagwoerter">
+        <input type="radio" id="krüppel" name="swBehinderung" value="krüppel" class="radio">
+          <label for="krüppel">krüppel</label>
+      </div>
+      <div id="swHomophobie" class="schlagwoerter">
+        <input type="radio" id="schwuchtel" name="swHomophobie" value="schwuchtel" class="radio">
+          <label for="schwuchtel">schwuchtel</label>
+      </div>
+    </div>
+    
+    <div id="fdFluechtlinge"></div>
+
+ </div>
 </div>
 
 <script>
@@ -101,6 +111,7 @@
       $( ".cross" ).hide();
       $( ".menu" ).hide();
       $(".schlagwoerter").hide();
+      $("#fdFluechtlinge").hide();
 
       $( ".hamburger" ).click(
         function() {
@@ -142,10 +153,10 @@
         function() {
           $("#layername").html("Flüchtlinge");
           $("#over_map").show();
-          $("#flAll").attr("checked", "checked");
           $(".schlagwoerter").hide();
           $("#schlagwoerter").show();
           $("#swFluechtlinge").show();
+          $("#flAll").attr("checked", "checked");
           actLayer = "Flüchtlinge"
         });
 
@@ -171,6 +182,65 @@
           $("#schlagwoerter").show();
           $("#swBehinderung").show();
           actLayer = "Behinderung";
+      });
+
+      $.get("/visualization/txt/fluechtlingeFD.txt", function(data) {
+                // #echo_file = id from div
+                $("#fdFluechtlinge").html(data);
+            });
+
+      $("#om_tab1").click(
+        function() {
+          $("#fdFluechtlinge").hide();
+          $(".normalisierung").show();
+          switch (actLayer) {
+            case "Twitteraktivität":
+              break;
+            case "Flüchtlinge":
+              $("#schlagwoerter").show();
+              $("#swFluechtlinge").show();
+              break;
+            case "Homophobie":
+              $("#schlagwoerter").show();
+              $("#swHomophobie").show();
+              break;
+            case "Behinderung":
+              $("#schlagwoerter").show();
+              $("#swBehinderung").show();
+          };
+          
+          $("#om_tab2").css({ "border-top":"rgba(30,36,38,0.5)",
+                              "border-right":"rgba(30,36,38,0.5)",
+                              "border-bottom":"white 1px solid",
+                              "color":"#BDBDBD",
+                              "background-color":"rgba(30,36,38,0.5)",
+                              "left":"50%"
+          });
+          $("#om_tab1").css({ "border-top":"white 1px solid",
+                              "border-left":"white 1px solid",
+                              "border-bottom":"rgba(30,36,38,0.9)",
+                              "color":"white",
+                              "background-color":"rgba(30,36,38,0.9)",
+          });
+      });
+
+      $("#om_tab2").click(function() {
+        $(".normalisierung").hide();
+        $(".schlagwoerter").hide();
+        $("#fdFluechtlinge").show();
+        $("#om_tab1").css({ "border-top":"rgba(30,36,38,0.5)",
+                            "border-left":"rgba(30,36,38,0.5)",
+                            "border-bottom":"white 1px solid",
+                            "color":"#BDBDBD",
+                            "background-color":"rgba(30,36,38,0.5)",
+        });
+        $("#om_tab2").css({ "border-top":"white 1px solid",
+                            "border-right":"white 1px solid",
+                            "border-bottom":"rgba(30,36,38,0.9)",
+                            "color":"white",
+                            "background-color":"rgba(30,36,38,0.9)",
+                            "left":"49.6%"
+        });
       });
 
       $(".radio").click(
@@ -560,6 +630,7 @@
   <iframe id="homophCoords" src="visualization/txt/homophobie_coords.txt" style="display: none;"></iframe>
   <iframe id="homophCoordsPN" src="visualization/txt/homophobie_coords_pn.txt" style="display: none;"></iframe>
   <iframe id="homophCoordsTN" src="visualization/txt/homophobie_coords_tn.txt" style="display: none;"></iframe>
+   <iframe id="fluechtlingeFD" src="visualization/txt/fluechtlingeFD.txt" style="display: none;"></iframe>
 
 </body>
 </html>

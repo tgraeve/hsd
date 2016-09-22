@@ -85,21 +85,56 @@ header div {
   position: relative;
 }
 
-#over_map {
+#om_tab1, #om_tab2, #over_map {
   position: absolute;
-  /*height: 50vh;
-  width: 20vw;*/
-  padding: 1em;
-  border-radius: 20px;
-  border: white 1px solid;
   font-family: Caecilia;
   font-size: 22px;
   color: white;
   background-color: rgba(30,36,38,0.9);
-  top: 1%;
-  left: 0.5%;
+  border: white 1px solid;
   z-index: 99;
+}
 
+#om_tab1 {
+  top: -1.54em;
+  left: -1px;
+  height: 1.5em;
+  width: 50%;
+  border-top-left-radius: 20px;
+  border-bottom: none;
+  border-right: none;
+  text-align: center;
+  line-height: 1.7em;
+}
+
+#om_tab2 {
+  top: -1.54em;
+  left: 50%;
+  height: 1.5em;
+  width: 50%;
+  border-top-right-radius: 20px;
+  /*border-bottom: none;*/
+  /*border-left: none;*/
+  border-top: none;
+  border-right: none;
+  color: #BDBDBD;
+  text-align: center;
+  line-height: 1.7em;
+  background-color: rgba(30,36,38,0.5);
+}
+
+#over_map {
+  width: 20vw;
+  padding: 1em 1.5em 1.5em 1.5em;
+  border-radius: 0 0 20px 20px;
+  border-top: none;
+  top: 9%;
+  left: 0.5%;
+}
+
+#fdFluechtlinge {
+  height: 62vh;
+  color: white;
 }
 
 /*Burger Menu Test*/
