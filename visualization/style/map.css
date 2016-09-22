@@ -27,7 +27,7 @@ header {
   color: red;
 }
 
-#inhalt, #layername, #erklaerung, .menu{
+#inhalt, #layername, #dropLayer, .prefDrop, .pref , #erklaerung, .menu{
   font-family: Caecilia;
 }
 
@@ -51,6 +51,24 @@ header div {
 
 #layername {
   font-size: 30px;
+}
+
+#dropLayer {
+  width: 9.2em;
+  font-size: 30px;
+  margin-left: -3%;
+}
+
+.pref {
+  font-size: 15px;
+  color: white;
+  margin-left: 1%
+}
+
+.prefDrop, #dropLayer {
+  border:none;
+  border-radius: 15px;
+  padding-left: 0.5em;
 }
 
 #inhalt, #erklaerung {
