@@ -4,81 +4,504 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>deutschlandhasst</title>
+
+
   <link rel="stylesheet" type="text/css" href="visualization/style/map.css">
+
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?&libraries=visualization"></script>
+
 </head>
 
-<body>  
- 
-  <div id="dropdown-bar">     
+<body>
+  <header>
+
+<!--     <input class="hamburger" type="image" src="visualization/style/burger.png" name="menu" />
+    <input class="cross" type="image" src="visualization/style/kreuz.png" name="close" />
+ -->  
+    <div id="inhalt"><u>Thema:</u><br>
+      <select id="dropLayer" name="dropLayer">
+        <option selected="selected">Flüchtlinge</option>
+        <option>Twitteraktivität</option>
+        <option>Homophobie</option>
+        <option>Behinderung</option>
+      </select>
+    </div>
+
+    <div id="normalisierung" class="pref"><u>Normalisierung:</u><br>
+      <select id="dropNorm" class="prefDrop" name="dropNorm">
+        <option selected="selected">keine (reine Anzahl)</option>
+        <option>über Einwohner</option>
+        <option>über Twitteraktivität</option>
+      </select>
+    </div>
+
+     <div id="schlagwoerter" class="pref"><u>Schlagwörter:</u><br>
+     <div id="dropFluechtlinge" class="dropSw">
+        <select class="prefDrop" name="dropFluechtlinge">
+          <option selected="selected">alle</option>
+          <option>rapefugees</option>
+          <option>krimigranten</option>
+          <option>stopislam</option>
+          <option>deport</option>
+          <option>migrantcrisis</option>
+          <option>refugeecrisis</option>
+          <option>refujihadis</option>
+          <option>immivasion</option>
+          <option>merkills</option>
+          <option>germanozid</option>
+        </select>
+      </div>
+      <div id="dropHomophobie" class="dropSw">
+        <select class="prefDrop" name="dropHomophobie">
+          <option selected="selected">schwuchtel</option>
+        </select>
+      </div>
+      <div id="dropBehinderung" class="dropSw">
+        <select class="prefDrop" name="dropBehinderung">
+          <option selected="selected">krüppel</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="titel">deutschlandhasst<br>
+      <div id="untertitel">Hasserfuellte  Tweets  in  Deutschland</div>
+    </div>
+
+    <div id="erklaerung">
+      Erklärung
+    </div>
+  </header>
+
+<!--   <div class="menu">
     <ul>
-      <li class="dropdown">
-          <a href="#" class="dropbtn" onclick="LoadFile();">Flüchtlinge</a>
-          <div class="dropdown-content">
-            <a href="#" onclick="toggleWordFD();">Worthäufigkeiten</a>
-          </div>
-        </li>
-      <li><a href="#" onclick="LoadFile2();">Wacken</a></li>
+      <a id="bFluecht" href="#"><li>Flüchtlinge</li></a>
+      <a id="bHomo" href="#"><li>Homophobie</li></a>
+      <a id="bBeh" href="#"><li>Behinderung</li></a>
+      <a id="bAll" href="#"><li>Twitteraktivität</li></a>
     </ul>
-  </div>
+  </div> -->
 
-  <iframe id="frmFile" src="visualization/txt/fluecht_coordsBACKUP_ALL_WITHOUT_GER.txt" onload="LoadFile();" style="display: none;"></iframe>
-  <iframe id="frmFile2" src="visualization/txt/wacken_coordsBACKUP_ALL_WITHOUT_GER.txt" style="display: none;"></iframe>
-      
-  <div id="floating-panel">
-    <button onclick="toggleHeatmap()">Toggle heatmap</button>
-    <button onclick="changeGradient()">Change gradient</button>
-  </div>
+<div id="wrapper">
+   <div id="map">
 
-  <div id="map"></div>
+   </div>
 
-  <div id="wordFD">
-    <object width="300" height="300" type="text/text" data="twitter/data/fluechtlingeFD.txt" border="0" style="font color:white;" ></object>
-  </div>
- 
-  <script>
+   
 
-    function toggleWordFD() {
-      if (document.getElementById('wordFD').style.display != "block"){
-        document.getElementById('wordFD').style.display = "block";
-      }
-      else{
-        document.getElementById('wordFD').style.display = "none";
-      }
-    }
+   <div id="over_map">
+    <div id="om_tab1">Optionen</div>
+    <div id="om_tab2">Begriffe</div>
+
+    <!-- <div class="normalisierung">
+    <u>Normalisierung:</u> <br>
+      <input type="radio" id="nKeine" name="norm" checked="checked" value="keine" class="radio">
+        <label for="nKeine">keine (reine Anzahl)</label><br>
+      <input type="radio" id="nEinwohner" name="norm" value="einwohner" class="radio">
+        <label for="nEinwohner">über Einwohner</label><br>
+      <input type="radio" id="nTwitter" name="norm" value="twitter" class="radio">
+        <label id="nTwitter_label" for="nTwitter">über Twitteraktivität</label>
+    </div>
+
+    <div id="schlagwoerter" class="schlagwoerter">
+      <br><u>Schlagwörter:</u>
+      <div id="swFluechtlinge" class="schlagwoerter">
+        <input type="radio" id="flAll" name="swFluechtlinge" value="flAll" checked="checked" class="radio">
+          <label for="flAll">alle</label><br>
+        <input type="radio" id="rapefugees" name="swFluechtlinge" class="radio">
+          <label for="rapefugees">rapefugees</label><br>
+        <input type="radio" id="krimigranten" name="swFluechtlinge" class="radio">
+          <label for="krimigranten">krimigranten</label><br>
+        <input type="radio" id="stopislam" name="swFluechtlinge" class="radio">
+          <label for="stopislam">stopislam</label><br>
+        <input type="radio" id="deport" name="swFluechtlinge" class="radio">
+          <label for="deport">deport</label><br>
+        <input type="radio" id="migrantcrisis" name="swFluechtlinge" class="radio">
+          <label for="migrantcrisis">migrantcrisis</label><br>
+        <input type="radio" id="refugeecrisis" name="swFluechtlinge" class="radio">
+          <label for="refugeecrisis">refugeecrisis</label><br>
+        <input type="radio" id="refujihadis" name="swFluechtlinge" class="radio">
+          <label for="refujihadis">refujihadis</label><br>
+        <input type="radio" id="immivasion" name="swFluechtlinge" class="radio">
+          <label for="immivasion">immivasion</label><br>
+        <input type="radio" id="merkills" name="swFluechtlinge" class="radio">
+          <label for="merkills">merkills</label><br>
+        <input type="radio" id="germanozid" name="swFluechtlinge" class="radio">
+          <label for="germanozid">germanozid</label>
+      </div>
+      <div id="swBehinderung" class="schlagwoerter">
+        <input type="radio" id="krüppel" name="swBehinderung" value="krüppel" class="radio">
+          <label for="krüppel">krüppel</label>
+      </div>
+      <div id="swHomophobie" class="schlagwoerter">
+        <input type="radio" id="schwuchtel" name="swHomophobie" value="schwuchtel" class="radio">
+          <label for="schwuchtel">schwuchtel</label>
+      </div>
+    </div>
+    
+    <div id="fdFluechtlinge"></div>
+
+ </div> -->
+</div>
+
+<script>
+    
+    /*burger menu test*/
+    $(document).ready(function(){
+      /* Hier der jQuery-Code */
+      // $( ".cross" ).hide();
+      // $( ".menu" ).hide();
+      // $(".schlagwoerter").hide();
+      $("#dropHomophobie").hide();
+      $("#dropBehinderung").hide();
+
+      // $( ".hamburger" ).click(
+      //   function() {
+      //     $( ".menu" ).slideToggle( "slow", function() {
+      //       $( ".hamburger" ).hide();
+      //       $( ".cross" ).show();
+      //     });
+      // });
+
+      // $( ".cross" ).click(
+      //   function() {
+      //     $( ".menu" ).slideToggle( "slow", function() {
+      //       $( ".cross" ).hide();
+      //       $( ".hamburger" ).show();
+      //     });
+      // });
+
+      // $(".menu").click(
+      //   function() {
+      //     $( ".menu" ).slideToggle( "slow", function() {
+      //       $( ".cross" ).hide();
+      //       $( ".hamburger" ).show();
+      //     });
+      // });
+
+      var actLayer = "Flüchtlinge";
+
+      // $("#bAll").click(loadAll);
+      // $("#bAll").click(function() {
+      //     $("#layername").html("Twitteraktivität");
+      //     $("#schlagwoerter").hide();
+      //     $(".schlagwoerter").hide();
+      //     actLayer = "Twitteraktivität";
+      // });
         
+
+      // $("#bFluecht").click(loadFluechtlinge);
+      // $("#bFluecht").click(
+      //   function() {
+      //     $("#layername").html("Flüchtlinge");
+      //     $("#over_map").show();
+      //     $(".schlagwoerter").hide();
+      //     $("#schlagwoerter").show();
+      //     $("#swFluechtlinge").show();
+      //     $("#flAll").attr("checked", "checked");
+      //     actLayer = "Flüchtlinge"
+      //   });
+
+      // $("#bHomo").click(loadHomophobie);
+      // $("#bHomo").click(
+      //   function() {
+      //     $("#layername").html("Homophobie");
+      //     $("#over_map").show();
+      //     $("#schwuchtel").attr("checked", "checked");
+      //     $(".schlagwoerter").hide();
+      //     $("#schlagwoerter").show();
+      //     $("#swHomophobie").show();
+      //     actLayer = "Homophobie";
+      // });
+
+      // $("#bBeh").click(
+      //   function() {
+      //     $("#layername").html("Behinderung");
+      //     alert("Bisher noch keine Daten hinterlegt!")
+      //     $("#over_map").show();
+      //     $("#krüppel").attr("checked", "checked");
+      //     $(".schlagwoerter").hide();
+      //     $("#schlagwoerter").show();
+      //     $("#swBehinderung").show();
+      //     actLayer = "Behinderung";
+      // });
+
+      $.get("/visualization/txt/fluechtlingeFD.txt", function(data) {
+                // #echo_file = id from div
+                $("#fdFluechtlinge").html(data);
+            });
+
+      $("#dropLayer").change( 
+        function() {
+          switch ($("#dropLayer").val()) {
+            case "Twitteraktivität":
+              loadAll();
+              $("#schlagwoerter").hide();
+              break;
+            case "Flüchtlinge":
+              loadFluechtlinge();
+              $("#schlagwoerter").show();
+              $(".dropSw").hide();
+              $("#dropFluechtlinge").show();
+              break;
+            case "Homophobie":
+              loadHomophobie();
+              $("#schlagwoerter").show();
+              $(".dropSw").hide();
+              $("#dropHomophobie").show();
+              break;
+            case "Behinderung":
+              alert("Bisher leider keine Daten hinterlegt!")
+              $("#schlagwoerter").show();
+              $(".dropSw").hide();
+              $("#dropBehinderung").show();
+              break;
+          }
+        });
+
+      $("#dropNorm").change( 
+        function() {
+          switch ($("#dropLayer").val()) {
+            case "Twitteraktivität":
+              switch ($("dropNorm").val()) {
+                case "keine (reine Anzahl)":
+                  loadAll();
+                  break;
+                case "über Einwohner":
+                  loadAllPN();
+                  break;
+              }
+              break;
+            case "Flüchtlinge":
+              switch ($("#dropNorm").val()) {
+                case "keine (reine Anzahl)":
+                  loadFluechtlinge();
+                  break;
+                case "über Einwohner":
+                  loadFluechtlingePN();
+                  break;
+                case "über Twitteraktivität":
+                  loadFluechtlingeTN();
+                  break;
+                }
+              break;
+            case "Homophobie":
+              switch ($("#dropNorm").val()) {
+                case "keine (reine Anzahl)":
+                  loadHomophobie();
+                  break;
+                case "über Einwohner":
+                  loadHomophobiePN();
+                  break;
+                case "über Twitteraktivität":
+                  loadHomophobieTN();
+                  break;
+                }
+              break;
+            case "Behinderung":
+              switch ($("#dropNorm").val()) {
+                case "keine (reine Anzahl)":
+                  loadBehinderung();
+                  break;
+                case "über Einwohner":
+                  loadBehinderungPN();
+                  break;
+                case "über Twitteraktivität":
+                  loadBehinderungTN();
+                  break;
+                }
+              break;
+          }
+        });
+
+      // $("#om_tab1").click(
+      //   function() {
+      //     $("#fdFluechtlinge").hide();
+      //     $(".normalisierung").show();
+      //     switch (actLayer) {
+      //       case "Twitteraktivität":
+      //         break;
+      //       case "Flüchtlinge":
+      //         $("#schlagwoerter").show();
+      //         $("#swFluechtlinge").show();
+      //         break;
+      //       case "Homophobie":
+      //         $("#schlagwoerter").show();
+      //         $("#swHomophobie").show();
+      //         break;
+      //       case "Behinderung":
+      //         $("#schlagwoerter").show();
+      //         $("#swBehinderung").show();
+      //     };
+          
+      //     $("#om_tab2").css({ "border-top":"rgba(30,36,38,0.5)",
+      //                         "border-right":"rgba(30,36,38,0.5)",
+      //                         "border-bottom":"white 1px solid",
+      //                         "color":"#BDBDBD",
+      //                         "background-color":"rgba(30,36,38,0.5)",
+      //                         "left":"50%"
+      //     });
+      //     $("#om_tab1").css({ "border-top":"white 1px solid",
+      //                         "border-left":"white 1px solid",
+      //                         "border-bottom":"rgba(30,36,38,0.9)",
+      //                         "color":"white",
+      //                         "background-color":"rgba(30,36,38,0.9)",
+      //     });
+      // });
+
+      // $("#om_tab2").click(function() {
+      //   $(".normalisierung").hide();
+      //   $(".schlagwoerter").hide();
+      //   $("#fdFluechtlinge").show();
+      //   $("#om_tab1").css({ "border-top":"rgba(30,36,38,0.5)",
+      //                       "border-left":"rgba(30,36,38,0.5)",
+      //                       "border-bottom":"white 1px solid",
+      //                       "color":"#BDBDBD",
+      //                       "background-color":"rgba(30,36,38,0.5)",
+      //   });
+      //   $("#om_tab2").css({ "border-top":"white 1px solid",
+      //                       "border-right":"white 1px solid",
+      //                       "border-bottom":"rgba(30,36,38,0.9)",
+      //                       "color":"white",
+      //                       "background-color":"rgba(30,36,38,0.9)",
+      //                       "left":"49.6%"
+      //   });
+      // });
+
+      // $(".radio").click(
+      //   function(){
+      //     if (actLayer == "Twitteraktivität") {
+      //         switch ($("input[name='norm']:checked").val()) {
+      //           case "keine":
+      //             loadAll();
+      //             break;
+      //           case "einwohner":
+      //             loadAllPN();
+      //         }
+      //     }
+      //     else if (actLayer == "Flüchtlinge") {
+      //       switch ($("input[name='swFluechtlinge']:checked").val()) {
+      //         case "flAll":
+      //           switch ($("input[name='norm']:checked").val()) {
+      //             case "keine":
+      //               loadFluechtlinge();
+      //               break;
+      //             case "einwohner":
+      //               loadFluechtlingePN();
+      //               break;
+      //             case "twitter":
+      //               loadFluechtlingeTN();
+      //           }
+      //       }
+      //     }
+      //     else if (actLayer == "Homophobie") {
+      //       switch ($("input[name='swHomophobie']:checked").val()) {
+      //         case "schwuchtel":
+      //           switch ($("input[name='norm']:checked").val()) {
+      //             case "keine":
+      //               loadHomophobie();
+      //               break;
+      //             case "einwohner":
+      //               loadHomophobiePN();
+      //               break;
+      //             case "twitter":
+      //               loadHomophobieTN();
+      //           }
+      //       }
+      //     }
+      // });
+    });
+
+  var map;
+  var heatmap;
+
+  function initLayer() {
+    heatmap.setMap(null);
+    heatmap = new google.maps.visualization.HeatmapLayer({
+      data: getPoints(),
+      map: map
+    });
+    heatmap.set('radius', heatmap.get('radius') ? null : 60);
+    heatmap.set('opacity', heatmap.get('opacity') ? null : 0.9);
+
+  }
+
+  function initialize() {
+
+    var styleArray = [
+      { featureType: 'road',
+        elementType: 'geometry',
+        stylers: [
+          { visibility: 'off' }
+        ]
+      },
+      { featureType: 'road',
+        elementType: 'labels',
+        stylers: [
+          { visibility: 'off' }
+        ]
+      },
+      { featureType: 'transit',
+        stylers: [
+          { visibility: 'off' }
+        ]
+      },
+      { featureType: 'landscape',
+        elementType: 'geometry.fill', 
+        stylers: [
+          { color: '#343f43' }
+        ] 
+      },
+      { elementType: 'labels.text',
+        stylers: [
+          { invert_lightness: true }
+        ]
+      },
+      { featureType: 'poi',
+        elementType: 'geometry.fill',
+        stylers: [
+          { color: '#343f43' }
+        ]
+      }
+    ];
+
+    var mapOptions = {
+      zoom: 6,
+      center: {lat: 51.5, lng: 8.0},
+      mapTypeId: google.maps.MapTypeId.TERRAIN,
+      styles: styleArray,
+      mapTypeControl:false
+    };
+
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    var center;
+    function calculateCenter() {
+      center = map.getCenter();
+    }
+
+    google.maps.event.addDomListener(map, 'idle', function() {
+      calculateCenter();
+    });
+
+    google.maps.event.addDomListener(window, 'resize', function() {
+      map.setCenter(center);
+    });
+
+    heatmap = new google.maps.visualization.HeatmapLayer({
+      data: getPoints(),
+      map: map
+    });
+    heatmap.set('radius', heatmap.get('radius') ? null : 60);
+    heatmap.set('opacity', heatmap.get('opacity') ? null : 0.9);
+
+  }
+
     var latLonArray;
     var arrLength;
 
-    function LoadFile() {
-      var oFrame = document.getElementById("frmFile");
-      var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
-      while (strRawContents.indexOf("\r") >= 0)
-          strRawContents = strRawContents.replace("\r", "");
-      var arrLines = strRawContents.split("\n");
-      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
-      latLonArray = new Array(arrLines.length);
-      arrLength = arrLines.length;
-      for (var i = 0; i < arrLines.length; i++) {
-          var curLine = arrLines[i];
-          //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
-          var curString = curLine.toString();
-          var str1 = curString.replace("\"", "");
-          var str2 = str1.replace("\"", "");
-          var str3 = str2.replace(" ", "");
-          //alert(str3);
-          var curArr = str3.split(",");
-          //alert(curArr[1]);
-          latLonArray[i] = new Array(2);
-          latLonArray[i][0] = parseFloat(curArr[0]);
-          latLonArray[i][1] = parseFloat(curArr[1]);
-          //alert((i+1) + ", 1: " + latLonArray[i][0]);
-          //alert((i+1) + ", 2: " + latLonArray[i][1]);
-      }
-      initLayer();
-    }
-
-    function LoadFile2() {
-      var oFrame = document.getElementById("frmFile2");
+    function loadFluechtlinge() {
+      var oFrame = document.getElementById("fluechtCoords");
       var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
       while (strRawContents.indexOf("\r") >= 0)
           strRawContents = strRawContents.replace("\r", "");
@@ -90,47 +513,200 @@
         var curLine = arrLines[i];
         //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
         var curString = curLine.toString();
-        var str1 = curString.replace("\"", "");
-        var str2 = str1.replace("\"", "");
-        var str3 = str2.replace(" ", "");
-        //alert(str3);
-        var curArr = str3.split(",");
+        var curArr = curString.split(",");
         //alert(curArr[1]);
-        latLonArray[i] = new Array(2);
+        latLonArray[i] = new Array(3);
         latLonArray[i][0] = parseFloat(curArr[0]);
         latLonArray[i][1] = parseFloat(curArr[1]);
-        //alert((i+1) + ", 1: " + latLonArray[i][0]);
-        //alert((i+1) + ", 2: " + latLonArray[i][1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
       }
       initLayer();
     }
 
-  var map, heatmap;
+    function loadFluechtlingePN() {
+      var oFrame = document.getElementById("fluechtCoordsPN");
+            var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
 
-  function initLayer() {
-    heatmap.setMap(null);
-    heatmap = new google.maps.visualization.HeatmapLayer({
-      data: getPoints(),
-      map: map
-    });
-    heatmap.set('radius', heatmap.get('radius') ? null : 30);
-    heatmap.set('opacity', heatmap.get('opacity') ? null : 0.9);
-  }
+    function loadFluechtlingeTN() {
+      var oFrame = document.getElementById("fluechtCoordsTN");
+            var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
 
-  function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 6,
-      center: {lat: 51.5, lng: 10.0},
-      mapTypeId: google.maps.MapTypeId.HYBRID
-    });
+    function loadAll() {
+      var oFrame = document.getElementById("allCoords");
+            var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
 
-    heatmap = new google.maps.visualization.HeatmapLayer({
-      data: getPoints(),
-      map: map
-    });
-    heatmap.set('radius', heatmap.get('radius') ? null : 30);
-    heatmap.set('opacity', heatmap.get('opacity') ? null : 0.9);
-  }
+    function loadAllPN() {
+      var oFrame = document.getElementById("allCoordsPN");
+            var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
+
+    function loadHomophobie() {
+      var oFrame = document.getElementById("homophCoords");
+      var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
+
+    function loadHomophobiePN() {
+      var oFrame = document.getElementById("homophCoordsPN");
+      var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
+
+    function loadHomophobieTN() {
+      var oFrame = document.getElementById("homophCoordsTN");
+      var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+      while (strRawContents.indexOf("\r") >= 0)
+          strRawContents = strRawContents.replace("\r", "");
+      var arrLines = strRawContents.split("\n");
+      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+      latLonArray = new Array(arrLines.length);
+      arrLength = arrLines.length;
+      for (var i = 0; i < arrLines.length; i++) {
+        var curLine = arrLines[i];
+        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+        var curString = curLine.toString();
+        var curArr = curString.split(",");
+        //alert(curArr[1]);
+        latLonArray[i] = new Array(3);
+        latLonArray[i][0] = parseFloat(curArr[0]);
+        latLonArray[i][1] = parseFloat(curArr[1]);
+        latLonArray[i][2] = parseFloat(curArr[2]);
+        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
+        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
+        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
+      }
+      initLayer();
+    }
 
   function toggleHeatmap() {
     heatmap.setMap(heatmap.getMap() ? null : map);
@@ -138,19 +714,19 @@
 
   function changeGradient() {
     var gradient = [
-      'rgba(0, 255, 255, 0)',
+      // 'rgba(0, 255, 255, 0)',
       'rgba(0, 255, 255, 1)',
       'rgba(0, 191, 255, 1)',
       'rgba(0, 127, 255, 1)',
-      'rgba(0, 63, 255, 1)',
+      // 'rgba(0, 63, 255, 1)',
       'rgba(0, 0, 255, 1)',
       'rgba(0, 0, 223, 1)',
-      'rgba(0, 0, 191, 1)',
+      // 'rgba(0, 0, 191, 1)',
       'rgba(0, 0, 159, 1)',
       'rgba(0, 0, 127, 1)',
       'rgba(63, 0, 91, 1)',
       'rgba(127, 0, 63, 1)',
-      'rgba(191, 0, 31, 1)',
+      // 'rgba(191, 0, 31, 1)',
       'rgba(255, 0, 0, 1)'
     ]
     heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
@@ -160,14 +736,26 @@
   function getPoints() {
     var googleArray = new Array(arrLength);
       for (var i = 0; i < arrLength; i++){
-          googleArray[i] = new google.maps.LatLng(latLonArray[i][0], latLonArray[i][1]);
+          googleArray[i] = {location: new google.maps.LatLng(latLonArray[i][0], latLonArray[i][1]), weight: latLonArray[i][2]};
       }
       return googleArray
       //Daten zum Testen des Heatmap-Layers
      //return [new google.maps.LatLng(52.21231, 11.254687)]    
   }
-</script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?&signed_in=true&libraries=visualization&callback=initMap"></script>
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+  </script>
+
+  <iframe id="fluechtCoords" src="visualization/txt/fluechtlinge_coords.txt" onload="loadFluechtlinge();" style="display: none;"></iframe>
+  <iframe id="fluechtCoordsPN" src="visualization/txt/fluechtlinge_coords_pn2.txt" style="display: none;"></iframe>
+  <iframe id="fluechtCoordsTN" src="visualization/txt/fluechtlinge_coords_tn.txt" style="display: none;"></iframe>
+  <iframe id="allCoords" src="visualization/txt/all_coords.txt" style="display: none;"></iframe>
+  <iframe id="allCoordsPN" src="visualization/txt/all_coords_pn.txt" style="display: none;"></iframe>
+  <iframe id="homophCoords" src="visualization/txt/homophobie_coords.txt" style="display: none;"></iframe>
+  <iframe id="homophCoordsPN" src="visualization/txt/homophobie_coords_pn.txt" style="display: none;"></iframe>
+  <iframe id="homophCoordsTN" src="visualization/txt/homophobie_coords_tn.txt" style="display: none;"></iframe>
+   <iframe id="fluechtlingeFD" src="visualization/txt/fluechtlingeFD.txt" style="display: none;"></iframe>
 
 </body>
 </html>
