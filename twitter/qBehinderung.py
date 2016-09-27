@@ -2,6 +2,7 @@
 # This Python file uses the following encoding: utf-8
 import tweepy
 import json
+import io
 
 consumer_key = "2OM8NeaYfQRcXng9tPgFKft3t"
 consumer_secret = "7QP0bVI0qDPotmHG0DSI8FBJVQExCPmdJczdGQFGtC0g98zZEn"
@@ -13,8 +14,14 @@ auth = tweepy.AppAuthHandler(consumer_key,consumer_secret)
 
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
-query = "krüppel"
+query = ""
 
+tags = set(io.open('resources/tagsBehinderung.txt', encoding='utf-8').read().splitlines())
+query += tags.pop()
+for tag in tags:
+	query += " OR " + tag
+
+print query
 count = 0
 
 for tweet in tweepy.Cursor(api.search,q=query,geocode="51.1656910,10.4515260,454km",lang="de").items():
