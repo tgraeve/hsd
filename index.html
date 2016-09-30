@@ -33,6 +33,10 @@
         <option value="PN">über Einwohner</option>
         <option value="TN">über Twitteraktivität</option>
       </select>
+      <div id="divFD">
+      <input id="checkFD" type="checkbox" name="freqDist">
+      <label for="checkFD">Häufigkeitsverteilung</label>
+      </div>
     </div>
 
      <div id="schlagwoerter" class="pref"><u>Schlagwörter:</u><br>
@@ -168,8 +172,10 @@
   <iframe id="behPN_spasti" src="visualization/txt/behinderung_spasti_coords_pn.txt" style="display: none;"></iframe>
   <iframe id="behTN_spasti" src="visualization/txt/behinderung_spasti_coords_tn.txt" style="display: none;"></iframe>
 
-
+<!-- Frequency Distributions -->
    <iframe id="fluechtlingeFD" src="visualization/txt/fluechtlingeFD.txt" style="display: none;"></iframe>
+   <iframe id="homophobieFD" src="visualization/txt/homophobieFD.txt" style="display: none;"></iframe>
+   <iframe id="behinderungFD" src="visualization/txt/behinderungFD.txt" style="display: none;"></iframe>
 
 </body>
 </html>
