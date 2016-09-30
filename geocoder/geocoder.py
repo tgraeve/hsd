@@ -233,8 +233,7 @@ class hsdGeocoder:
 		for item in fdList:
 			for row in csvReaderDB:
 				if (str(item[0]) == str(row[0])):
-					weightTemp = (float(item[1])/float(row[3])) * 1500000
-					weight = ((weightTemp-2.53)/346.33)
+					weight = (float(item[1])/float(row[3])) * 1500000
 					writerCoords.writerow([row[1] + "," + row[2] + "," + str("%.5f" % weight)])
 					
 			ifile2.seek(0)

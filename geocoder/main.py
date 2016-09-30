@@ -9,19 +9,21 @@ from time import *
 
 geo = hsdGeocoder()
 
-t1 = clock()
-geo.json2cities("normalize")
-t2 = clock()
-
 # t1 = clock()
-# geo.cities2coords("fluechtlinge_refugeecrisis")
+# geo.json2cities("fluechtlinge")
 # t2 = clock()
 
-#t1 = clock()
-#geo.pop_normalizer("fluechtlinge_rapefugees")
-#t2 = clock()
+# t1 = clock()
+# geo.cities2coords("normalize")
+# t2 = clock()
 
-#geo.tweet_normalizer("fluechtlinge_rapefugees")
+# t1 = clock()
+# geo.pop_normalizer("normalize")
+# t2 = clock()
+
+t1 = clock()
+geo.tweet_normalizer("fluechtlinge")
+t2 = clock()
 
 t = t2 - t1
 print "Runtime: " + str(t)
