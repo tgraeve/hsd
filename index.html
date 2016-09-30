@@ -45,10 +45,10 @@
           <option>deport</option>
           <option>migrantcrisis</option>
           <option>refugeecrisis</option>
-          <option>refujihadis</option>
+<!--           <option>refujihadis</option>
           <option>immivasion</option>
           <option>merkills</option>
-          <option>germanozid</option>
+          <option>germanozid</option> -->
         </select>
       </div>
       <div id="dropHomophobie" class="dropSw">
@@ -86,11 +86,11 @@
 <!-- iframes laden die Daten der jeweiligen Heatmap-Layer -->
 
   <!-- Twitteraktivität -->
-  <iframe id="allCoords" src="visualization/txt/all_coords.txt" style="display: none;"></iframe>
-  <iframe id="allCoordsPN" src="visualization/txt/all_coords_pn.txt" style="display: none;"></iframe>
+  <iframe id="twitterN" src="visualization/txt/all_coords.txt" style="display: none;"></iframe>
+  <iframe id="twitterPN" src="visualization/txt/all_coords_pn.txt" style="display: none;"></iframe>
 
   <!-- Flüchtlinge -->
-  <iframe id="fluechtN_alle" src="visualization/txt/fluechtlinge_coords.txt" onload="loadFluechtlinge();" style="display: none;"></iframe>
+  <iframe id="fluechtN_alle" src="visualization/txt/fluechtlinge_coords.txt" onload="loadLayerData('fluechtN_alle');" style="display: none;"></iframe>
   <iframe id="fluechtPN_alle" src="visualization/txt/fluechtlinge_coords_pn2.txt" style="display: none;"></iframe>
   <iframe id="fluechtTN_alle" src="visualization/txt/fluechtlinge_coords_tn.txt" style="display: none;"></iframe>
   <iframe id="fluechtN_rapefugees" src="visualization/txt/fluechtlinge_rapefugees_coords.txt" style="display: none;"></iframe>
@@ -98,9 +98,9 @@
   <iframe id="fluechtTN_rapefugees" src="visualization/txt/fluechtlinge_rapefugees_coords_tn.txt" style="display: none;"></iframe>
   
   <!-- Homophobie -->
-  <iframe id="homophCoords" src="visualization/txt/homophobie_coords.txt" style="display: none;"></iframe>
-  <iframe id="homophCoordsPN" src="visualization/txt/homophobie_coords_pn.txt" style="display: none;"></iframe>
-  <iframe id="homophCoordsTN" src="visualization/txt/homophobie_coords_tn.txt" style="display: none;"></iframe>
+  <iframe id="homoN_alle" src="visualization/txt/homophobie_coords.txt" style="display: none;"></iframe>
+  <iframe id="homoPN_alle" src="visualization/txt/homophobie_coords_pn.txt" style="display: none;"></iframe>
+  <iframe id="homoTN_alle" src="visualization/txt/homophobie_coords_tn.txt" style="display: none;"></iframe>
 
 
 
