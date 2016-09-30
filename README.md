@@ -38,21 +38,10 @@ Das finale „Produkt“ wird eine frei zugängliche Website (voraussichtlich de
 Der Nutzer kann hierbei die Darstellung wie folgt manipulieren:
 - Bildausschnitt kann durch mehrstufigen Zoom und Verschiebung frei gewählt werden (die Cluster der Tweets werden beim hereinzoomen detaillierter und beim herauszoomen allgemeiner)
 - Durch Checkboxen kann der Nutzer Themen oder auch einzelne Hashtags wählen, zu welchen die entsprechenden Tweets dargestellt werden sollen
-- Über einen Slider kann der Nutzer den Zeitraum bestimmen, aus welchem die entsprechenden Tweets dargestellt werden sollen
 
 Abbildung 1 zeigt den groben Aufbau, welchen wir uns für die Website vorstellen. Das Design kann und wird im Laufe des Projekts wahrscheinlich abweichen. Auch halten wir uns die Option offen, die Checkboxen durch Dropdown-Menüs zu ersetzen, falls die Darstellung durch die Menge der Auswahlmöglichkeiten zu unübersichtlich wird.
 
 ![Mockup](/media/concept/mockup1.png "Abbildung 1")
 
 
-Zur technischen Realisierung der Präsentation nutzen wir die JavaScript-Bibliothek [OpenLayers](http://openlayers.org). Hierbei handelt es sich um eine JavaScript-API, die es ermöglicht, dynamische Karten auf Webseiten darzustellen.
-
-In letzter Instanz mussten wir uns zunächst zwischen der [Google Maps API](http://developers.google.com/maps/) und OpenLayers entscheiden, welche in ihrer Funktionalität sehr ähnlich sind.
-
-Unsere Entscheidung fiel aus folgenden Gründen auf OpenLayers:
-- Open Source
-- In den Punkten Design und Funktionalität wesentlich flexibler als Google Maps
-  - Quelle der Kartendaten kann frei gewählt werden
-  - Eigene Features können leichter implementiert werden
-
-
+Zur technischen Realisierung der Präsentation nutzen wir die [Maps Javascript API](https://developers.google.com/maps/documentation/javascript/?hl=de) von Google. Hierbei handelt es sich um eine JavaScript-API, die es ermöglicht, dynamische Karten auf Webseiten darzustellen.
