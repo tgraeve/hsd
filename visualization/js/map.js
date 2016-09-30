@@ -86,210 +86,22 @@ var map;
     var latLonArray;
     var arrLength;
 
-    function loadFluechtlinge() {
-      var oFrame = document.getElementById("fluechtCoords");
+    function loadLayerData(name) {
+      var oFrame = document.getElementById(name);
       var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
       while (strRawContents.indexOf("\r") >= 0)
           strRawContents = strRawContents.replace("\r", "");
       var arrLines = strRawContents.split("\n");
-      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
       latLonArray = new Array(arrLines.length);
       arrLength = arrLines.length;
       for (var i = 0; i < arrLines.length; i++) {
         var curLine = arrLines[i];
-        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
         var curString = curLine.toString();
         var curArr = curString.split(",");
-        //alert(curArr[1]);
         latLonArray[i] = new Array(3);
         latLonArray[i][0] = parseFloat(curArr[0]);
         latLonArray[i][1] = parseFloat(curArr[1]);
         latLonArray[i][2] = parseFloat(curArr[2]);
-        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
-        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
-        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
-      }
-      initLayer();
-    }
-
-    function loadFluechtlingePN() {
-      var oFrame = document.getElementById("fluechtCoordsPN");
-            var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
-      while (strRawContents.indexOf("\r") >= 0)
-          strRawContents = strRawContents.replace("\r", "");
-      var arrLines = strRawContents.split("\n");
-      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
-      latLonArray = new Array(arrLines.length);
-      arrLength = arrLines.length;
-      for (var i = 0; i < arrLines.length; i++) {
-        var curLine = arrLines[i];
-        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
-        var curString = curLine.toString();
-        var curArr = curString.split(",");
-        //alert(curArr[1]);
-        latLonArray[i] = new Array(3);
-        latLonArray[i][0] = parseFloat(curArr[0]);
-        latLonArray[i][1] = parseFloat(curArr[1]);
-        latLonArray[i][2] = parseFloat(curArr[2]);
-        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
-        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
-        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
-      }
-      initLayer();
-    }
-
-    function loadFluechtlingeTN() {
-      var oFrame = document.getElementById("fluechtCoordsTN");
-            var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
-      while (strRawContents.indexOf("\r") >= 0)
-          strRawContents = strRawContents.replace("\r", "");
-      var arrLines = strRawContents.split("\n");
-      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
-      latLonArray = new Array(arrLines.length);
-      arrLength = arrLines.length;
-      for (var i = 0; i < arrLines.length; i++) {
-        var curLine = arrLines[i];
-        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
-        var curString = curLine.toString();
-        var curArr = curString.split(",");
-        //alert(curArr[1]);
-        latLonArray[i] = new Array(3);
-        latLonArray[i][0] = parseFloat(curArr[0]);
-        latLonArray[i][1] = parseFloat(curArr[1]);
-        latLonArray[i][2] = parseFloat(curArr[2]);
-        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
-        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
-        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
-      }
-      initLayer();
-    }
-
-    function loadAll() {
-      var oFrame = document.getElementById("allCoords");
-            var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
-      while (strRawContents.indexOf("\r") >= 0)
-          strRawContents = strRawContents.replace("\r", "");
-      var arrLines = strRawContents.split("\n");
-      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
-      latLonArray = new Array(arrLines.length);
-      arrLength = arrLines.length;
-      for (var i = 0; i < arrLines.length; i++) {
-        var curLine = arrLines[i];
-        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
-        var curString = curLine.toString();
-        var curArr = curString.split(",");
-        //alert(curArr[1]);
-        latLonArray[i] = new Array(3);
-        latLonArray[i][0] = parseFloat(curArr[0]);
-        latLonArray[i][1] = parseFloat(curArr[1]);
-        latLonArray[i][2] = parseFloat(curArr[2]);
-        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
-        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
-        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
-      }
-      initLayer();
-    }
-
-    function loadAllPN() {
-      var oFrame = document.getElementById("allCoordsPN");
-            var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
-      while (strRawContents.indexOf("\r") >= 0)
-          strRawContents = strRawContents.replace("\r", "");
-      var arrLines = strRawContents.split("\n");
-      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
-      latLonArray = new Array(arrLines.length);
-      arrLength = arrLines.length;
-      for (var i = 0; i < arrLines.length; i++) {
-        var curLine = arrLines[i];
-        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
-        var curString = curLine.toString();
-        var curArr = curString.split(",");
-        //alert(curArr[1]);
-        latLonArray[i] = new Array(3);
-        latLonArray[i][0] = parseFloat(curArr[0]);
-        latLonArray[i][1] = parseFloat(curArr[1]);
-        latLonArray[i][2] = parseFloat(curArr[2]);
-        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
-        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
-        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
-      }
-      initLayer();
-    }
-
-    function loadHomophobie() {
-      var oFrame = document.getElementById("homophCoords");
-      var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
-      while (strRawContents.indexOf("\r") >= 0)
-          strRawContents = strRawContents.replace("\r", "");
-      var arrLines = strRawContents.split("\n");
-      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
-      latLonArray = new Array(arrLines.length);
-      arrLength = arrLines.length;
-      for (var i = 0; i < arrLines.length; i++) {
-        var curLine = arrLines[i];
-        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
-        var curString = curLine.toString();
-        var curArr = curString.split(",");
-        //alert(curArr[1]);
-        latLonArray[i] = new Array(3);
-        latLonArray[i][0] = parseFloat(curArr[0]);
-        latLonArray[i][1] = parseFloat(curArr[1]);
-        latLonArray[i][2] = parseFloat(curArr[2]);
-        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
-        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
-        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
-      }
-      initLayer();
-    }
-
-    function loadHomophobiePN() {
-      var oFrame = document.getElementById("homophCoordsPN");
-      var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
-      while (strRawContents.indexOf("\r") >= 0)
-          strRawContents = strRawContents.replace("\r", "");
-      var arrLines = strRawContents.split("\n");
-      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
-      latLonArray = new Array(arrLines.length);
-      arrLength = arrLines.length;
-      for (var i = 0; i < arrLines.length; i++) {
-        var curLine = arrLines[i];
-        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
-        var curString = curLine.toString();
-        var curArr = curString.split(",");
-        //alert(curArr[1]);
-        latLonArray[i] = new Array(3);
-        latLonArray[i][0] = parseFloat(curArr[0]);
-        latLonArray[i][1] = parseFloat(curArr[1]);
-        latLonArray[i][2] = parseFloat(curArr[2]);
-        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
-        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
-        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
-      }
-      initLayer();
-    }
-
-    function loadHomophobieTN() {
-      var oFrame = document.getElementById("homophCoordsTN");
-      var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
-      while (strRawContents.indexOf("\r") >= 0)
-          strRawContents = strRawContents.replace("\r", "");
-      var arrLines = strRawContents.split("\n");
-      //alert("File " + oFrame.src + " has " + arrLines.length + " lines");
-      latLonArray = new Array(arrLines.length);
-      arrLength = arrLines.length;
-      for (var i = 0; i < arrLines.length; i++) {
-        var curLine = arrLines[i];
-        //alert("Line #" + (i + 1) + " is: '" + curLine + "'");
-        var curString = curLine.toString();
-        var curArr = curString.split(",");
-        //alert(curArr[1]);
-        latLonArray[i] = new Array(3);
-        latLonArray[i][0] = parseFloat(curArr[0]);
-        latLonArray[i][1] = parseFloat(curArr[1]);
-        latLonArray[i][2] = parseFloat(curArr[2]);
-        //alert((i+1) + ", 1: " + latLonWeightArray[i][0]);
-        //alert((i+1) + ", 2: " + latLonWeightArray[i][1]);
-        //alert((i+1) + ", 3: " + latLonWeightArray[i][2]);
       }
       initLayer();
     }

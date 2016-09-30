@@ -18,29 +18,26 @@
 <body>
   <header>
 
-<!--     <input class="hamburger" type="image" src="visualization/style/burger.png" name="menu" />
-    <input class="cross" type="image" src="visualization/style/kreuz.png" name="close" />
- -->  
     <div id="inhalt"><u>Thema:</u><br>
-      <select id="dropLayer" name="dropLayer">
-        <option selected="selected">Flüchtlinge</option>
-        <option>Twitteraktivität</option>
-        <option>Homophobie</option>
-        <option>Behinderung</option>
+      <select id="dropLayer" class="prefDrop" name="dropLayer">
+        <option value="fluecht" selected="selected">Flüchtlinge</option>
+        <option value="twitter">Twitteraktivität</option>
+        <option value="homo">Homophobie</option>
+        <option value="beh">Behinderung</option>
       </select>
     </div>
 
     <div id="normalisierung" class="pref"><u>Normalisierung:</u><br>
       <select id="dropNorm" class="prefDrop" name="dropNorm">
-        <option selected="selected">keine (reine Anzahl)</option>
-        <option>über Einwohner</option>
-        <option>über Twitteraktivität</option>
+        <option value="N" selected="selected">keine (reine Anzahl)</option>
+        <option value="PN">über Einwohner</option>
+        <option value="TN">über Twitteraktivität</option>
       </select>
     </div>
 
      <div id="schlagwoerter" class="pref"><u>Schlagwörter:</u><br>
      <div id="dropFluechtlinge" class="dropSw">
-        <select class="prefDrop" name="dropFluechtlinge">
+        <select id="fluechtDrop" class="prefDrop" name="dropFluechtlinge">
           <option selected="selected">alle</option>
           <option>rapefugees</option>
           <option>krimigranten</option>
@@ -55,19 +52,19 @@
         </select>
       </div>
       <div id="dropHomophobie" class="dropSw">
-        <select class="prefDrop" name="dropHomophobie">
+        <select id="homoDrop" class="prefDrop" name="dropHomophobie">
           <option selected="selected">schwuchtel</option>
         </select>
       </div>
       <div id="dropBehinderung" class="dropSw">
-        <select class="prefDrop" name="dropBehinderung">
+        <select id="behDrop" class="prefDrop" name="dropBehinderung">
           <option selected="selected">krüppel</option>
         </select>
       </div>
     </div>
 
     <div id="titel">deutschlandhasst<br>
-      <div id="untertitel">Hasserfuellte  Tweets  in  Deutschland</div>
+      <div id="untertitel">Hasserfuellte &nbsp;&nbsp;Tweets &nbsp;&nbsp;in &nbsp;&nbsp;Deutschland</div>
     </div>
 
     <div id="erklaerung">
@@ -75,85 +72,39 @@
     </div>
   </header>
 
-<!--   <div class="menu">
-    <ul>
-      <a id="bFluecht" href="#"><li>Flüchtlinge</li></a>
-      <a id="bHomo" href="#"><li>Homophobie</li></a>
-      <a id="bBeh" href="#"><li>Behinderung</li></a>
-      <a id="bAll" href="#"><li>Twitteraktivität</li></a>
-    </ul>
-  </div> -->
-
 <div id="wrapper">
    <div id="map">
 
    </div>
 
-   
-
    <div id="over_map">
     <div id="om_tab1">Optionen</div>
     <div id="om_tab2">Begriffe</div>
 
-    <!-- <div class="normalisierung">
-    <u>Normalisierung:</u> <br>
-      <input type="radio" id="nKeine" name="norm" checked="checked" value="keine" class="radio">
-        <label for="nKeine">keine (reine Anzahl)</label><br>
-      <input type="radio" id="nEinwohner" name="norm" value="einwohner" class="radio">
-        <label for="nEinwohner">über Einwohner</label><br>
-      <input type="radio" id="nTwitter" name="norm" value="twitter" class="radio">
-        <label id="nTwitter_label" for="nTwitter">über Twitteraktivität</label>
-    </div>
-
-    <div id="schlagwoerter" class="schlagwoerter">
-      <br><u>Schlagwörter:</u>
-      <div id="swFluechtlinge" class="schlagwoerter">
-        <input type="radio" id="flAll" name="swFluechtlinge" value="flAll" checked="checked" class="radio">
-          <label for="flAll">alle</label><br>
-        <input type="radio" id="rapefugees" name="swFluechtlinge" class="radio">
-          <label for="rapefugees">rapefugees</label><br>
-        <input type="radio" id="krimigranten" name="swFluechtlinge" class="radio">
-          <label for="krimigranten">krimigranten</label><br>
-        <input type="radio" id="stopislam" name="swFluechtlinge" class="radio">
-          <label for="stopislam">stopislam</label><br>
-        <input type="radio" id="deport" name="swFluechtlinge" class="radio">
-          <label for="deport">deport</label><br>
-        <input type="radio" id="migrantcrisis" name="swFluechtlinge" class="radio">
-          <label for="migrantcrisis">migrantcrisis</label><br>
-        <input type="radio" id="refugeecrisis" name="swFluechtlinge" class="radio">
-          <label for="refugeecrisis">refugeecrisis</label><br>
-        <input type="radio" id="refujihadis" name="swFluechtlinge" class="radio">
-          <label for="refujihadis">refujihadis</label><br>
-        <input type="radio" id="immivasion" name="swFluechtlinge" class="radio">
-          <label for="immivasion">immivasion</label><br>
-        <input type="radio" id="merkills" name="swFluechtlinge" class="radio">
-          <label for="merkills">merkills</label><br>
-        <input type="radio" id="germanozid" name="swFluechtlinge" class="radio">
-          <label for="germanozid">germanozid</label>
-      </div>
-      <div id="swBehinderung" class="schlagwoerter">
-        <input type="radio" id="krüppel" name="swBehinderung" value="krüppel" class="radio">
-          <label for="krüppel">krüppel</label>
-      </div>
-      <div id="swHomophobie" class="schlagwoerter">
-        <input type="radio" id="schwuchtel" name="swHomophobie" value="schwuchtel" class="radio">
-          <label for="schwuchtel">schwuchtel</label>
-      </div>
-    </div>
-    
-    <div id="fdFluechtlinge"></div>
-
- </div> -->
 </div>
 
-  <iframe id="fluechtCoords" src="visualization/txt/fluechtlinge_coords.txt" onload="loadFluechtlinge();" style="display: none;"></iframe>
-  <iframe id="fluechtCoordsPN" src="visualization/txt/fluechtlinge_coords_pn2.txt" style="display: none;"></iframe>
-  <iframe id="fluechtCoordsTN" src="visualization/txt/fluechtlinge_coords_tn.txt" style="display: none;"></iframe>
+<!-- iframes laden die Daten der jeweiligen Heatmap-Layer -->
+
+  <!-- Twitteraktivität -->
   <iframe id="allCoords" src="visualization/txt/all_coords.txt" style="display: none;"></iframe>
   <iframe id="allCoordsPN" src="visualization/txt/all_coords_pn.txt" style="display: none;"></iframe>
+
+  <!-- Flüchtlinge -->
+  <iframe id="fluechtN_alle" src="visualization/txt/fluechtlinge_coords.txt" onload="loadFluechtlinge();" style="display: none;"></iframe>
+  <iframe id="fluechtPN_alle" src="visualization/txt/fluechtlinge_coords_pn2.txt" style="display: none;"></iframe>
+  <iframe id="fluechtTN_alle" src="visualization/txt/fluechtlinge_coords_tn.txt" style="display: none;"></iframe>
+  <iframe id="fluechtN_rapefugees" src="visualization/txt/fluechtlinge_rapefugees_coords.txt" style="display: none;"></iframe>
+  <iframe id="fluechtPN_rapefugees" src="visualization/txt/fluechtlinge_rapefugees_coords_pn.txt" style="display: none;"></iframe>
+  <iframe id="fluechtTN_rapefugees" src="visualization/txt/fluechtlinge_rapefugees_coords_tn.txt" style="display: none;"></iframe>
+  
+  <!-- Homophobie -->
   <iframe id="homophCoords" src="visualization/txt/homophobie_coords.txt" style="display: none;"></iframe>
   <iframe id="homophCoordsPN" src="visualization/txt/homophobie_coords_pn.txt" style="display: none;"></iframe>
   <iframe id="homophCoordsTN" src="visualization/txt/homophobie_coords_tn.txt" style="display: none;"></iframe>
+
+
+
+
    <iframe id="fluechtlingeFD" src="visualization/txt/fluechtlingeFD.txt" style="display: none;"></iframe>
 
 </body>

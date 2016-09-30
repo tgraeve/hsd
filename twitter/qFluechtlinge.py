@@ -16,7 +16,7 @@ api = tweepy.API(auth, wait_on_rate_limit=True)
 
 query = ""
 
-tags = set(io.open('resources/tagsFluechtlinge.txt', encoding='utf-8').read().splitlines())
+tags = set(io.open('/home/hsd/twitter/resources/tagsFluechtlinge.txt', encoding='utf-8').read().splitlines())
 query += tags.pop()
 for tag in tags:
 	query += " OR " + tag
