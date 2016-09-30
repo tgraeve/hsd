@@ -5,12 +5,26 @@ Diese Datei dient zum Ausführen der Methoden aus geocoder.py
 """
 
 from geocoder import hsdGeocoder
+from time import *
 
 geo = hsdGeocoder()
 
-geo.json2cities("fluechtlinge")
-#geo.cities2coords("fluechtlinge")
-#geo.pop_normalizer("fluechtlinge")
-#geo.tweet_normalizer("fluechtlinge_rapefugees")
+# t1 = clock()
+# geo.json2cities("fluechtlinge")
+# t2 = clock()
 
+# t1 = clock()
+# geo.cities2coords("normalize")
+# t2 = clock()
+
+# t1 = clock()
+# geo.pop_normalizer("normalize")
+# t2 = clock()
+
+t1 = clock()
+geo.tweet_normalizer("fluechtlinge")
+t2 = clock()
+
+t = t2 - t1
+print "Runtime: " + str(t)
 print "--- main.py FINISHED ---"

@@ -45,9 +45,11 @@ class hsdGeocoder:
 				countUserLoc = 0
 				countUserLocNotEmpty = 0
 				countMatchesUserLoc = 0
+
+				#tweetCounter = 0
 				for line in f:
 					tweet = json.loads(line)
-					if ("germanozid" in tweet['text'].encode('utf-8')):
+					if ("" in tweet['text'].encode('utf-8')):
 						# Durchsuchen der Spalte tweet['coordinates'].
 						# Falls Koordinaten vorhanden sind, werden diese mithilfe des externen Werkzeugs "Nominatim" einer Stadt zugeordnet.
 						if (tweet['coordinates'] is not None):
@@ -112,10 +114,11 @@ class hsdGeocoder:
 								userPlaceSplitC = userPlace.split(',')
 								userPlaceSplitS = userPlace.split(' ')
 								userPlaceSplitM = userPlace.split('-')
+								userPlaceSplitSl = userPlace.split('/')
 								for row in csvReader:
 									if (endSearch == False):
 										cityName = str(row[0]).lower()
-										if (cityName in userPlaceSplitC or cityName in userPlaceSplitS or cityName in userPlaceSplitM):
+										if (cityName in userPlaceSplitC or cityName in userPlaceSplitS or cityName in userPlaceSplitM or cityName in userPlaceSplitSl):
 											endSearch = True
 											writerMatchedCities.writerow([cityName])
 											countMatchesUserLoc += 1
@@ -124,6 +127,8 @@ class hsdGeocoder:
 							if endSearch == False:
 								writerNoMatch.writerow([userPlace])
 
+						#tweetCounter += 1
+						#print str(tweetCounter)
 						ifile.seek(0)
 
 			# Ausgaben für weitere Überprüfungen
@@ -228,9 +233,7 @@ class hsdGeocoder:
 		for item in fdList:
 			for row in csvReaderDB:
 				if (str(item[0]) == str(row[0])):
-					weightTemp = (float(item[1])/float(row[3])) * 1500000
-					#weight = ((weightTemp-5.9)/1817.7)
-					weight = math.sqrt(weightTemp)
+					weight = (float(item[1])/float(row[3])) * 1500000
 					writerCoords.writerow([row[1] + "," + row[2] + "," + str("%.5f" % weight)])
 					
 			ifile2.seek(0)
@@ -256,7 +259,7 @@ class hsdGeocoder:
 		ifile2 = open("db/DE_cleanedUp.tab", "r")
 		csvReaderDB = csv.reader(ifile2, delimiter='\t')
 
-		ifile3 = open("txt/all_matchedCities.txt", "r")
+		ifile3 = open("txt/normalize_matchedCities.txt", "r")
 		csvReaderTweetCount = csv.reader(ifile3, delimiter='\n')
 
 		ofile = open(input + "_coords_tn.txt", "wb")
