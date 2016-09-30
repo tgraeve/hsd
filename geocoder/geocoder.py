@@ -88,11 +88,13 @@ class hsdGeocoder:
 							countPlaces += 1
 							endSearch = False
 							tweetPlace = tweet['place']['full_name'].encode('utf-8').lower()
+							print tweetPlace
 							tweetPlaceSplitC = tweetPlace.split(',')
+							tweetPlaceSplitS = tweetPlace.split(' ')
 							for row in csvReader:
 								if (endSearch == False):
 									cityName = str(row[0]).lower()
-									if (cityName in tweetPlaceSplitC):
+									if (cityName in tweetPlaceSplitC or cityName in tweetPlaceSplitS):
 										endSearch = True
 										writerMatchedCities.writerow([cityName])
 										countMatchesPlaces += 1
@@ -229,7 +231,7 @@ class hsdGeocoder:
 			fdList.append([i[0], i[1]])
 
 		# In dieser Schleife werden für alle Städte die entsprechenden Koordinaten aus der Datenbank gelesen und mit Gewicht in die Output-Datei geschrieben.
-		# Das Gewicht für jede Stadt lässt sich berechnen durch: (Anzahl Tweets / Anzahl Einwohner) * 1.500.000
+		# Das Gewicht für jede Stadt lässt sich berechnen durch: (Anzahl Tweets / Anzahl Einwohner) * 1.500.000 (der Faktor dient zur Abbildung auf einen natürlicheren Wertebereich)
 		for item in fdList:
 			for row in csvReaderDB:
 				if (str(item[0]) == str(row[0])):
@@ -288,7 +290,7 @@ class hsdGeocoder:
 			fdAllTweets.append([i[0], i[1]])
 
 		# In dieser Schleife werden für alle Städte die entsprechenden Koordinaten aus der Datenbank gelesen und mit Gewicht in die Output-Datei geschrieben.
-		# Das Gewicht für jede Stadt lässt sich berechnen durch: (Anzahl Tweets(zum Thema) / Anzahl Tweets (generell)) * 1.000
+		# Das Gewicht für jede Stadt lässt sich berechnen durch: (Anzahl Tweets(zum Thema) / Anzahl Tweets (generell)) * 1.000 (der Faktor dient zur Abbildung auf einen natürlicheren Wertebereich)
 		for i in fdMatchedCities:
 			for row in csvReaderDB:
 				if (str(i[0]) == str(row[0])):
